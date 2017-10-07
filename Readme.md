@@ -1,7 +1,7 @@
 # Личный проект «Пиксель хантер» [![Build status][travis-image]][travis-url]
 
 * Студент: [Т Зак](https://up.htmlacademy.ru/ecmascript/3/user/84313).
-* Наставник: `Неизвестно`.
+* Наставник: [Роман Чаругин](https://github.com/RomiC).
 
 ---
 
