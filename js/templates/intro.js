@@ -12,9 +12,9 @@ const statsTemplate = `
 
 const element = getElementFromTemplate(statsTemplate);
 
-element.querySelector(`.intro__asterisk`).onclick = (event) => {
+element.querySelector(`.intro__asterisk`).addEventListener(`click`, (event) => {
   event.preventDefault();
   changeTemplate(greetingTemplate);
-};
+});
 
 export default element;

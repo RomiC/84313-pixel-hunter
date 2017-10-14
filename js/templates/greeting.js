@@ -19,10 +19,10 @@ const greetingTemplate = `
 
 const element = getElementFromTemplate(greetingTemplate);
 
-element.querySelector(`.greeting__continue`).onclick = (event) => {
+element.querySelector(`.greeting__continue`).addEventListener(`click`, (event) => {
   event.preventDefault();
   changeTemplate(rulesTemplate, `on`);
-};
+});
 
 export default element;
 

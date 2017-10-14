@@ -28,9 +28,9 @@ rulesInput.addEventListener(`keyup`, () => {
   rulesBtn.disabled = rulesInput.value.length === 0;
 });
 
-rulesBtn.onclick = (event) => {
+rulesBtn.addEventListener(`click`, (event) => {
   event.preventDefault();
   changeTemplate(game1Template, `game`);
-};
+});
 
 export default element;
