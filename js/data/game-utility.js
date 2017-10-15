@@ -11,25 +11,22 @@ const amountAnswers = 10;
 
 
 const countFinallyScores = (answers, lives) => {
-  let finallyScores = 0;
   if (answers.length < amountAnswers) {
     return -1;
   } else {
-    answers.forEach((answer) => {
+    let finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
         case RIGHT_ANSWER:
-          finallyScores = finallyScores + RIGHT_ANSWER_SCORE;
-          break;
+          return sum + RIGHT_ANSWER_SCORE;
         case FAST_ANSWER:
-          finallyScores = finallyScores + FAST_ANSWER_SCORE;
-          break;
+          return sum + FAST_ANSWER_SCORE;
         case SLOW_ANSWER:
-          finallyScores = finallyScores + SLOW_ANSWER_SCORE;
-          break;
+          return sum + SLOW_ANSWER_SCORE;
       }
-    });
-    finallyScores = finallyScores + lives * LIVE_SCORE;
-    return finallyScores;
+
+      return sum;
+    }, 0);
+    return finallyScores + lives * LIVE_SCORE;
   }
 };
 

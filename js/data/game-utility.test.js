@@ -1,5 +1,5 @@
 import assert from 'assert';
-import {countFinallyScores, createTimer} from './game-data.js';
+import {countFinallyScores, createTimer} from './game-utility.js';
 
 describe(`game data test`, () => {
   describe(`test function count finally scores`, () => {
