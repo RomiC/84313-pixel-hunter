@@ -26,6 +26,8 @@ describe(`game data test`, () => {
 
 
   describe(`test function create timer`, () => {
+
+
     it(`define time in timer`, () => {
       const newTimer = createTimer(3);
       assert.equal(newTimer.time, 3);
@@ -38,26 +40,25 @@ describe(`game data test`, () => {
 
     it(`timer can tick`, () => {
       const newTimer = createTimer(3);
-      newTimer.tick();
-      assert.equal(newTimer.time, 2);
+      assert.equal(newTimer.tick().time, 2);
     });
 
     it(`timer message`, () => {
-      const newTimer = createTimer(3);
-      newTimer.tick();
-      newTimer.tick();
-      assert.equal(newTimer.tick(), `Timer stopped`);
-      assert.equal(newTimer.time, 0);
+      let timer = createTimer(3);
+      timer = timer.tick();
+      timer = timer.tick();
+      timer = timer.tick();
+      assert.equal(timer.msg, `Timer stopped`);
     });
 
     it(`timer can't less 0`, () => {
-      const newTimer = createTimer(3);
-      newTimer.tick();
-      newTimer.tick();
-      newTimer.tick();
-      newTimer.tick();
-      newTimer.tick();
-      assert.equal(newTimer.time, 0);
+      let timer = createTimer(3);
+      timer = timer.tick();
+      timer = timer.tick();
+      timer = timer.tick();
+      timer = timer.tick();
+      timer = timer.tick();
+      assert.equal(timer.time, 0);
     });
 
 

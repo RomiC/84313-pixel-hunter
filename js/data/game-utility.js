@@ -30,22 +30,15 @@ const countFinallyScores = (answers, lives) => {
   }
 };
 
-const createTimer = (timeInSecond) => {
-  let second = 0;
-  if (timeInSecond > 0) {
-    second = timeInSecond;
-  }
-
+const createTimer = (timeInSecond, msg = ``) => {
   const timer = {
-    time: second,
-    tick: () => {
-      if (timer.time > 1) {
-        return timer.time--;
-      }
-
-      timer.time = 0;
-      return `Timer stopped`;
-    }
+    time: timeInSecond > 0 ? timeInSecond : 0,
+    tick() {
+      const value = timer.time - 1;
+      const msgTick = (value === 0) ? `Timer stopped` : ``;
+      return createTimer(value > 0 ? value : 0, msgTick);
+    },
+    msg
   };
   return timer;
 };
