@@ -3,7 +3,7 @@ import header from './templates/header.js';
 
 const mainScreen = document.querySelector(`main`);
 
-const changeTemplate = (template, dataGame, modeHeader) => {
+const changeTemplate = (template, modeHeader, dataGame) => {
   mainScreen.innerHTML = ``;
   const headerTemplate = header(dataGame, modeHeader);
   if (headerTemplate) {

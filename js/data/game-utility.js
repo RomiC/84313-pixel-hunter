@@ -9,7 +9,6 @@ const LIVE_SCORE = 50;
 
 const amountAnswers = 10;
 
-
 const countFinallyScores = (answers, lives) => {
   if (answers.length < amountAnswers) {
     return -1;
@@ -43,4 +42,8 @@ const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-export {countFinallyScores, createTimer};
+const copyOnWrite = (oldData, newData) => {
+  return Object.assign({}, oldData, newData);
+};
+
+export {countFinallyScores, createTimer, copyOnWrite, checkAnswers};

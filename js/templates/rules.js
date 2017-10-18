@@ -1,7 +1,8 @@
 import getElementFromTemplate from '../create-DOM.js';
 import changeTemplate from '../change-template.js';
-import game1Template from './game-1.js';
 import {initialGame} from '../data/game-data.js';
+import {copyOnWrite} from '../data/game-utility.js';
+import nextLevel from '../data/next-level.js';
 
 const rulesTemplate = `
   <div class="rules">
@@ -31,7 +32,8 @@ rulesInput.addEventListener(`keyup`, () => {
 
 rulesBtn.addEventListener(`click`, (event) => {
   event.preventDefault();
-  changeTemplate(game1Template, initialGame, `game`);
+  const newGame = copyOnWrite(initialGame);
+  nextLevel(newGame);
 });
 
 export default element;
