@@ -1,6 +1,7 @@
 const RIGHT_ANSWER = 1;
 const FAST_ANSWER = 2;
 const SLOW_ANSWER = 3;
+const WRONG_ANSWER = 0;
 
 const RIGHT_ANSWER_SCORE = 100;
 const FAST_ANSWER_SCORE = RIGHT_ANSWER_SCORE + 50;
@@ -46,4 +47,4 @@ const copyOnWrite = (oldData) => {
   return Object.assign({}, oldData);
 };
 
-export {countFinallyScores, createTimer, copyOnWrite};
+export {countFinallyScores, createTimer, copyOnWrite, RIGHT_ANSWER, FAST_ANSWER, SLOW_ANSWER, WRONG_ANSWER};

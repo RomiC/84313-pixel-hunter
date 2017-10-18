@@ -16,7 +16,7 @@ const game3Template = (data) => {
 
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game3Template(level));
-  el.querySelector(`.game`).appendChild(userStat({}));
+  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
 
   const pictures = Array.prototype.slice.call(el.querySelectorAll(`.game__option`));
 

@@ -28,7 +28,7 @@ const checkQuestion = (answers, a1, a2) => {
 
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game1Template(level));
-  el.querySelector(`.game`).appendChild(userStat({}));
+  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
 
   const radioBtns = Array.prototype.slice.call(el.querySelectorAll(`input[type=radio]`));
 
