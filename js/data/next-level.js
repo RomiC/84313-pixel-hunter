@@ -30,7 +30,7 @@ const nextLevel = (userDataGame, isCorrectAnswer) => {
 
     return changeTemplate(template, `game`, nextLevelDataGame);
   } else {
-    return changeTemplate(statsTemplate, `on`, nextLevelDataGame);
+    return changeTemplate(statsTemplate([nextLevelDataGame.stats]), `on`, nextLevelDataGame);
   }
 };
 

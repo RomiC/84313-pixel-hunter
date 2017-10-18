@@ -47,4 +47,7 @@ const copyOnWrite = (oldData) => {
   return Object.assign({}, oldData);
 };
 
-export {countFinallyScores, createTimer, copyOnWrite, RIGHT_ANSWER, FAST_ANSWER, SLOW_ANSWER, WRONG_ANSWER};
+export {countFinallyScores, createTimer, copyOnWrite,
+  RIGHT_ANSWER, FAST_ANSWER, SLOW_ANSWER, WRONG_ANSWER,
+  RIGHT_ANSWER_SCORE, FAST_ANSWER_SCORE, SLOW_ANSWER_SCORE,
+  LIVE_SCORE};
