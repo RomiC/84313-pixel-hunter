@@ -1,6 +1,7 @@
-import getElementFromTemplate from '../createDOM.js';
-import changeTemplate from '../changeTemplate.js';
+import getElementFromTemplate from '../create-DOM.js';
+import changeTemplate from '../change-template.js';
 import game2Template from './game-2.js';
+import userStat from './user-stat.js';
 
 const game1Template = `
   <div class="game">
@@ -29,23 +30,10 @@ const game1Template = `
         </label>
       </div>
     </form>
-    <div class="stats">
-      <ul class="stats">
-        <li class="stats__result stats__result--wrong"></li>
-        <li class="stats__result stats__result--slow"></li>
-        <li class="stats__result stats__result--fast"></li>
-        <li class="stats__result stats__result--correct"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-        <li class="stats__result stats__result--unknown"></li>
-      </ul>
-    </div>
   </div>`;
 
 let element = getElementFromTemplate(game1Template);
+element.appendChild(userStat({}));
 
 const radioBtns = Array.prototype.slice.call(element.querySelectorAll(`input[type=radio]`));
 

@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../createDOM.js';
-import changeTemplate from '../changeTemplate.js';
+import getElementFromTemplate from '../create-DOM.js';
+import changeTemplate from '../change-template.js';
 import rulesTemplate from './rules.js';
 
 const greetingTemplate = `

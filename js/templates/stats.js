@@ -1,4 +1,4 @@
-import getElementFromTemplate from '../createDOM.js';
+import getElementFromTemplate from '../create-DOM.js';
 
 const statsTemplate = `
   <div class="result">

@@ -1,5 +1,5 @@
-import getElementFromTemplate from '../createDOM.js';
-import changeTemplate from '../changeTemplate.js';
+import getElementFromTemplate from '../create-DOM.js';
+import changeTemplate from '../change-template.js';
 import game3Template from './game-3.js';
 
 const game2Template = `
