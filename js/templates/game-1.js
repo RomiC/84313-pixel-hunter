@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../create-DOM.js';
 import userStat from './user-stat.js';
 import nextLevel from '../data/next-level.js';
-import {copyOnWrite} from '../data/game-utility.js';
 
 const game1Template = (data) => {
   return `
@@ -44,21 +43,8 @@ const element = (level, userDataGame) => {
       }
 
       if (q1 && q2) {
-        let newData = {};
-        if (checkQuestion(level.answers, q1, q2)) {
-          newData = {
-            level: userDataGame.level + 1,
-            stats: userDataGame.push(1)
-          };
-        } else {
-          newData = {
-            level: userDataGame.level + 1,
-            lives: userDataGame.lives - 1,
-            stats: userDataGame.stats.push(0)
-          };
-        }
-        const dataGame = copyOnWrite(userDataGame, newData);
-        nextLevel(dataGame);
+        const isCorrectAnswer = checkQuestion(level.answers, q1, q2);
+        nextLevel(userDataGame, isCorrectAnswer);
       }
     });
   });

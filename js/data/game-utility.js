@@ -42,8 +42,8 @@ const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-const copyOnWrite = (oldData, newData) => {
-  return Object.assign({}, oldData, newData);
+const copyOnWrite = (oldData) => {
+  return Object.assign({}, oldData);
 };
 
-export {countFinallyScores, createTimer, copyOnWrite, checkAnswers};
+export {countFinallyScores, createTimer, copyOnWrite};

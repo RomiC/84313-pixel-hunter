@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../create-DOM.js';
 import userStat from './user-stat.js';
 import nextLevel from '../data/next-level.js';
-import {copyOnWrite} from '../data/game-utility.js';
 
 const game2Template = (data) => {
   return `
@@ -30,11 +29,9 @@ const element = (level, userDataGame) => {
   const radioBtns = Array.prototype.slice.call(el.querySelectorAll(`input[type=radio]`));
 
   radioBtns.forEach((radioBtn) => {
-    radioBtn.addEventListener(`change`, () => {
-      const dataGame = copyOnWrite(userDataGame, {
-        level: userDataGame.level + 1
-      });
-      nextLevel(dataGame);
+    radioBtn.addEventListener(`change`, (ev) => {
+      const isCorrectAnswer = ev.target.value === level.answer;
+      nextLevel(userDataGame, isCorrectAnswer);
     });
   });
 

@@ -1,7 +1,6 @@
 import getElementFromTemplate from '../create-DOM.js';
 import userStat from './user-stat.js';
 import nextLevel from '../data/next-level.js';
-import {copyOnWrite} from '../data/game-utility.js';
 
 const game3Template = (data) => {
   return `
@@ -22,11 +21,9 @@ const element = (level, userDataGame) => {
   const pictures = Array.prototype.slice.call(el.querySelectorAll(`.game__option`));
 
   pictures.forEach((pic) => {
-    pic.addEventListener(`click`, () => {
-      const dataGame = copyOnWrite(userDataGame, {
-        level: userDataGame.level + 1
-      });
-      nextLevel(dataGame);
+    pic.addEventListener(`click`, (ev) => {
+      const isCorrectAnswer = ev.target.lastElementChild.src === level.answer;
+      nextLevel(userDataGame, isCorrectAnswer);
     });
   });
 
