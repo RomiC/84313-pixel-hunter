@@ -1,26 +1,26 @@
 import assert from 'assert';
-import {countFinallyScores, createTimer} from './game-utility.js';
+import {countFinalScores, createTimer} from './game-utility.js';
 
 describe(`game data test`, () => {
   describe(`test function count finally scores`, () => {
     it(`should return -1 when player didn't answer 10 question`, () => {
-      assert.equal(countFinallyScores([1, 1, 1, 1, 1], 0), -1);
+      assert.equal(countFinalScores([1, 1, 1, 1, 1], 0), -1);
     });
 
     it(`should return 1150 when player answer 10 question(not fast, not slow), didn't fail`, () => {
-      assert.equal(countFinallyScores([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 3), 1150);
+      assert.equal(countFinalScores([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 3), 1150);
     });
 
     it(`should return 1150 when player answer 10 question(2 fast, 2 slow), didn't fail`, () => {
-      assert.equal(countFinallyScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 3), 1150);
+      assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 3), 1150);
     });
 
     it(`should return 1100 when player answer 10 question(2 fast, 3 slow), didn't fail`, () => {
-      assert.equal(countFinallyScores([1, 1, 1, 1, 2, 1, 2, 3, 3, 3], 3), 1100);
+      assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 3, 3, 3], 3), 1100);
     });
 
     it(`should return 1050 when player answer 10 question(2 fast, 2 slow), 2 fail`, () => {
-      assert.equal(countFinallyScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 1), 1050);
+      assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 1), 1050);
     });
   });
 

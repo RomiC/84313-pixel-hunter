@@ -27,9 +27,6 @@ const levels = [
     options: new Set([`https://i.imgur.com/DiHM5Zb.jpg`, `https://k32.kn3.net/5C7060EC5.jpg`, `http://i.imgur.com/DKR1HtB.jpg`]),
     answer: `https://k32.kn3.net/5C7060EC5.jpg`
   },
-
-
-
   {
     type: `2pic`,
     options: {
@@ -53,9 +50,6 @@ const levels = [
       `http://funpress.ru/uploads/posts/2012-10/1351691961_hiperrealistic-paintings-of-robin-eley-2.jpg`]),
     answer: `http://funpress.ru/uploads/posts/2012-10/1351691961_hiperrealistic-paintings-of-robin-eley-2.jpg`
   },
-
-
-
   {
     type: `2pic`,
     options: {

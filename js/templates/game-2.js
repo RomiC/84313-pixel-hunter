@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../create-DOM.js';
-import userStat from './user-stat.js';
+import {userStat} from './user-stat.js';
 import nextLevel from '../data/next-level.js';
 
 const game2Template = (data) => {
