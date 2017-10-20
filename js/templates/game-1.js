@@ -7,14 +7,14 @@ const game1Template = (data) => {
   <div class="game">
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
-      ${[...Object.entries(data.options)].map(([option], i) => `<div class="game__option">
-        <img src="${data.options[option]}" alt="Option ${i+1}" width="468" height="458">
+      ${data.options.map((option, i) => `<div class="game__option">
+        <img src="${option.question}" alt="Option ${i + 1}" width="468" height="458">
         <label class="game__answer game__answer--photo">
-          <input name="question${i+1}" type="radio" value="photo">
+          <input name="question${i + 1}" type="radio" value="photo">
             <span>Фото</span>
         </label>
         <label class="game__answer game__answer--paint">
-          <input name="question${i+1}" type="radio" value="paint">
+          <input name="question${i + 1}" type="radio" value="paint">
             <span>Рисунок</span>
           </label>
         </div>`).join(``)}
@@ -22,8 +22,8 @@ const game1Template = (data) => {
   </div>`;
 };
 
-const checkQuestion = (answers, a1, a2) => {
-  return answers.question1 === a1 && answers.question2 === a2;
+const checkQuestion = (options, a1, a2) => {
+  return options[0].answer === a1 && options[1].answer === a2;
 };
 
 const element = (level, userDataGame) => {
@@ -43,7 +43,7 @@ const element = (level, userDataGame) => {
       }
 
       if (q1 && q2) {
-        const isCorrectAnswer = checkQuestion(level.answers, q1, q2);
+        const isCorrectAnswer = checkQuestion(level.options, q1, q2);
         nextLevel(userDataGame, isCorrectAnswer);
       }
     });

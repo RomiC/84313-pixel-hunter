@@ -2,9 +2,9 @@ import changeTemplate from '../change-template.js';
 import game3Template from '../templates/game-3.js';
 import game2Template from '../templates/game-2.js';
 import game1Template from '../templates/game-1.js';
-import statsTemplate from '../templates/stats.js';
-import {levels} from './game-data.js';
-import {copyOnWrite} from './game-utility.js';
+import statsTemplate from '../templates/stat-games.js';
+import {questionsList} from './game-data.js';
+import {copy} from './game-utility.js';
 
 const gameTemplates = {
   '2pic': game1Template,
@@ -13,7 +13,7 @@ const gameTemplates = {
 };
 
 const nextLevel = (userDataGame, isCorrectAnswer) => {
-  const nextLevelDataGame = copyOnWrite(userDataGame);
+  const nextLevelDataGame = copy(userDataGame);
   if (isCorrectAnswer) {
     nextLevelDataGame.level++;
     nextLevelDataGame.stats.push(1);
@@ -25,7 +25,7 @@ const nextLevel = (userDataGame, isCorrectAnswer) => {
 
 
   if (nextLevelDataGame.lives && nextLevelDataGame.level < 10) {
-    const levelData = levels[nextLevelDataGame.level];
+    const levelData = questionsList[nextLevelDataGame.level];
     const template = gameTemplates[levelData.type](levelData, nextLevelDataGame);
 
     return changeTemplate(template, `game`, nextLevelDataGame);

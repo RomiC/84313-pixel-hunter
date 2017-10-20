@@ -1,10 +1,11 @@
 import assert from 'assert';
 import {countFinalScores, createTimer} from './game-utility.js';
+import {FAIL_GAME} from './constants.js';
 
 describe(`game data test`, () => {
   describe(`test function count finally scores`, () => {
     it(`should return -1 when player didn't answer 10 question`, () => {
-      assert.equal(countFinalScores([1, 1, 1, 1, 1], 0), -1);
+      assert.equal(countFinalScores([1, 1, 1, 1, 1], 0), FAIL_GAME);
     });
 
     it(`should return 1150 when player answer 10 question(not fast, not slow), didn't fail`, () => {

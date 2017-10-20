@@ -1,8 +1,7 @@
 import getElementFromTemplate from '../create-DOM.js';
 import {getListStatsTemplate} from './user-stat.js';
-import {countFinalScores,
-  RIGHT_ANSWER, FAST_ANSWER, SLOW_ANSWER, LIVE_SCORE,
-  RIGHT_ANSWER_SCORE, FAST_ANSWER_SCORE, SLOW_ANSWER_SCORE} from '../data/game-utility.js';
+import {countFinalScores} from '../data/game-utility.js';
+import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from '../data/constants.js';
 
 const getAmountTypeAnswer = (dataGame, typeAnswer) => {
   return dataGame.filter((score) => score === typeAnswer).length;
@@ -15,7 +14,7 @@ const getDetailScores = (dataGame, typeAnswer, typeAnswerScore) => {
 const getResultGame = (statUser, indexGame, lives) => {
   const finalScores = countFinalScores(statUser, lives);
 
-  if (finalScores !== -1) {
+  if (finalScores !== FAIL_GAME) {
     return `
     <table class="result__table">
         <tr>
@@ -25,40 +24,40 @@ const getResultGame = (statUser, indexGame, lives) => {
               ${getListStatsTemplate(statUser)}
             </ul>
           </td>
-          <td class="result__points">×&nbsp;${RIGHT_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, RIGHT_ANSWER, RIGHT_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.RIGHT, ANSWER_SCORES.RIGHT)}
           </td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">
-            ${getAmountTypeAnswer(statUser, FAST_ANSWER)}&nbsp;
+            ${getAmountTypeAnswer(statUser, ANSWERS.FAST)}&nbsp;
             <span class="stats__result stats__result--fast"></span>
           </td>
-          <td class="result__points">×&nbsp;${FAST_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.FAST}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, FAST_ANSWER, FAST_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.FAST, ANSWER_SCORES.FAST)}
           </td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
           <td class="result__extra">${lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
-          <td class="result__points">×&nbsp;${LIVE_SCORE}</td>
-          <td class="result__total">${lives * LIVE_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.LIVE}</td>
+          <td class="result__total">${lives * ANSWER_SCORES.LIVE}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">
-            ${getAmountTypeAnswer(statUser, SLOW_ANSWER)}&nbsp;
+            ${getAmountTypeAnswer(statUser, ANSWERS.SLOW)}&nbsp;
             <span class="stats__result stats__result--slow"></span>
           </td>
-          <td class="result__points">×&nbsp;${SLOW_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.SLOW}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, SLOW_ANSWER, SLOW_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.SLOW, ANSWER_SCORES.SLOW)}
           </td>
         </tr>
         <tr>
@@ -86,7 +85,7 @@ const getResultGame = (statUser, indexGame, lives) => {
 
 const getTitleStat = (stats, lives) => {
   const finalScores = countFinalScores(stats, lives);
-  return (finalScores === -1) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
+  return (finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
 };
 
 const statsTemplate = (dataGames) => {

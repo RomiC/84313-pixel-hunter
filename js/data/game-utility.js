@@ -1,32 +1,24 @@
-const RIGHT_ANSWER = 1;
-const FAST_ANSWER = 2;
-const SLOW_ANSWER = 3;
-const WRONG_ANSWER = 0;
-
-const RIGHT_ANSWER_SCORE = 100;
-const FAST_ANSWER_SCORE = 50;
-const SLOW_ANSWER_SCORE = -50;
-const LIVE_SCORE = 50;
+import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
 
 const amountAnswers = 10;
 
 const countFinalScores = (answers, lives) => {
   if (answers.length < amountAnswers) {
-    return -1;
+    return FAIL_GAME;
   } else {
     let finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
-        case RIGHT_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE;
-        case FAST_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE + FAST_ANSWER_SCORE;
-        case SLOW_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE + SLOW_ANSWER_SCORE;
+        case ANSWERS.RIGHT:
+          return sum + ANSWER_SCORES.RIGHT;
+        case ANSWERS.FAST:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.FAST;
+        case ANSWERS.SLOW:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.SLOW;
       }
 
       return sum;
     }, 0);
-    return finallyScores + lives * LIVE_SCORE;
+    return finallyScores + lives * ANSWER_SCORES.LIVE;
   }
 };
 
@@ -43,7 +35,7 @@ const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-const copyOnWrite = (object) => {
+const copy = (object) => {
   let newObj = Object.assign({}, object);
   for (const key in newObj) {
     if (newObj[key] instanceof Array) {
@@ -53,7 +45,4 @@ const copyOnWrite = (object) => {
   return newObj;
 };
 
-export {countFinalScores, createTimer, copyOnWrite,
-  RIGHT_ANSWER, FAST_ANSWER, SLOW_ANSWER, WRONG_ANSWER,
-  RIGHT_ANSWER_SCORE, FAST_ANSWER_SCORE, SLOW_ANSWER_SCORE,
-  LIVE_SCORE};
+export {countFinalScores, createTimer, copy};

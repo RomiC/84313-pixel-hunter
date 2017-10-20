@@ -5,8 +5,8 @@ const mainScreen = document.querySelector(`main`);
 
 const changeTemplate = (template, modeHeader, dataGame) => {
   mainScreen.innerHTML = ``;
-  const headerTemplate = header(dataGame, modeHeader);
-  if (headerTemplate) {
+  if (modeHeader) {
+    const headerTemplate = header(dataGame, modeHeader);
     mainScreen.appendChild(headerTemplate);
   }
   mainScreen.appendChild(template);

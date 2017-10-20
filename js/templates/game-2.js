@@ -8,7 +8,7 @@ const game2Template = (data) => {
     <p class="game__task">Угадай, фото или рисунок?</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${data.img}" alt="Option 1" width="705" height="455">
+        <img src="${data.options[0].question}" alt="Option 1" width="705" height="455">
         <label class="game__answer  game__answer--photo">
           <input name="question1" type="radio" value="photo">
           <span>Фото</span>
@@ -30,7 +30,7 @@ const element = (level, userDataGame) => {
 
   radioBtns.forEach((radioBtn) => {
     radioBtn.addEventListener(`change`, (ev) => {
-      const isCorrectAnswer = ev.target.value === level.answer;
+      const isCorrectAnswer = ev.target.value === level.options[0].answer;
       nextLevel(userDataGame, isCorrectAnswer);
     });
   });
