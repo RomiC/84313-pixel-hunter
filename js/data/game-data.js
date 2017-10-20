@@ -12,7 +12,8 @@ const questionsList = [
       {
         question: `http://i.imgur.com/1KegWPz.jpg`,
         answer: `photo`
-      },{
+      },
+      {
         question: `https://k42.kn3.net/CF42609C8.jpg`,
         answer: `paint`
       }
@@ -36,7 +37,8 @@ const questionsList = [
       {
         question: `https://flytothesky.ru/wp-content/uploads/2013/05/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D1%8B-%D0%9F%D0%B5%D0%B4%D1%80%D0%BE-%D0%9A%D0%B0%D0%BC%D0%BF%D0%BE%D1%81%D0%B0-13.jpg`,
         answer: `paint`
-      },{
+      },
+      {
         question: `http://www.rosphoto.com/images/u/articles/1511/4-anastasiya-kostakova.jpg`,
         answer: `photo`
       }
@@ -62,7 +64,8 @@ const questionsList = [
       {
         question: `http://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/12/2005/09/lowresmagnum.jpg`,
         answer: `photo`
-      },{
+      },
+      {
         question: `https://artlogic-res.cloudinary.com/w_1200,h_1000,c_limit,f_auto,fl_lossy/artlogicstorage/plusonegallery/images/view/8ed8b28bf1561e91b1fad1598b34702cd946c5a0.jpg`,
         answer: `paint`
       }

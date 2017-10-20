@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../create-DOM.js';
-import {ANSWERS, ANSWER_SCORES} from '../data/constants.js';
+import {ANSWERS} from '../data/constants.js';
 
 const resultLevel = (type) => {
   if (type === ANSWERS.RIGHT) {

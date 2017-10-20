@@ -2,7 +2,7 @@ import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
 
 const amountAnswers = 10;
 
-const countFinalScores = (answers, lives) => {
+export const countFinalScores = (answers, lives) => {
   if (answers.length < amountAnswers) {
     return FAIL_GAME;
   } else {
@@ -22,7 +22,7 @@ const countFinalScores = (answers, lives) => {
   }
 };
 
-const createTimer = (timeInSecond, msg = ``) => {
+export const createTimer = (timeInSecond, msg = ``) => {
   const timer = {
     time: timeInSecond > 0 ? timeInSecond : 0,
     tick() {
@@ -35,7 +35,7 @@ const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-const copy = (object) => {
+export const copy = (object) => {
   let newObj = Object.assign({}, object);
   for (const key in newObj) {
     if (newObj[key] instanceof Array) {
@@ -45,4 +45,21 @@ const copy = (object) => {
   return newObj;
 };
 
-export {countFinalScores, createTimer, copy};
+export const resize = (frame, given) => {
+  let pictureWidth, pictureHeight, proportion;
+
+  if (given.width > given.height) {
+    pictureWidth = frame.width;
+    proportion = frame.width / given.width;
+    pictureHeight = given.height * proportion;
+  } else {
+    pictureHeight = frame.height;
+    proportion = frame.height / given.height;
+    pictureWidth = given.width * proportion;
+  }
+
+  return {
+    width: pictureWidth,
+    height: pictureHeight
+  }
+};
