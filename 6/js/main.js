@@ -28,22 +28,26 @@ const initialGame = Object.freeze({
   stats: []
 });
 
-const levels = [
+const questionsList = [
   {
     type: `2pic`,
-    options: {
-      question1: `http://i.imgur.com/1KegWPz.jpg`,
-      question2: `https://k42.kn3.net/CF42609C8.jpg`
-    },
-    answers: {
-      question1: `photo`,
-      question2: `paint`
-    }
+    options: [
+      {
+        question: `http://i.imgur.com/1KegWPz.jpg`,
+        answer: `photo`
+      },
+      {
+        question: `https://k42.kn3.net/CF42609C8.jpg`,
+        answer: `paint`
+      }
+    ]
   },
   {
     type: `1pic`,
-    img: `https://k42.kn3.net/D2F0370D6.jpg`,
-    answer: `paint`
+    options: [{
+      question: `https://picfan.net/uploads/posts/2016-10/1477143762_14-porazitelnyy-giperrealizm-kartin-hudozhnika-leona-fushe.jpg`,
+      answer: `paint`
+    }]
   },
   {
     type: `paint`,
@@ -52,19 +56,23 @@ const levels = [
   },
   {
     type: `2pic`,
-    options: {
-      question1: `https://flytothesky.ru/wp-content/uploads/2013/05/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D1%8B-%D0%9F%D0%B5%D0%B4%D1%80%D0%BE-%D0%9A%D0%B0%D0%BC%D0%BF%D0%BE%D1%81%D0%B0-13.jpg`,
-      question2: `http://www.rosphoto.com/images/u/articles/1511/4-anastasiya-kostakova.jpg`
-    },
-    answers: {
-      question1: `paint`,
-      question2: `photo`
-    }
+    options: [
+      {
+        question: `https://flytothesky.ru/wp-content/uploads/2013/05/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D1%8B-%D0%9F%D0%B5%D0%B4%D1%80%D0%BE-%D0%9A%D0%B0%D0%BC%D0%BF%D0%BE%D1%81%D0%B0-13.jpg`,
+        answer: `paint`
+      },
+      {
+        question: `http://www.rosphoto.com/images/u/articles/1511/4-anastasiya-kostakova.jpg`,
+        answer: `photo`
+      }
+    ]
   },
   {
     type: `1pic`,
-    img: `http://trinixy.ru/pics5/20160115/interesnie_photo_23.jpg`,
-    answer: `photo`
+    options: [{
+      question: `http://trinixy.ru/pics5/20160115/interesnie_photo_23.jpg`,
+      answer: `photo`
+    }]
   },
   {
     type: `paint`,
@@ -75,19 +83,23 @@ const levels = [
   },
   {
     type: `2pic`,
-    options: {
-      question1: `http://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/12/2005/09/lowresmagnum.jpg`,
-      question2: `https://artlogic-res.cloudinary.com/w_1200,h_1000,c_limit,f_auto,fl_lossy/artlogicstorage/plusonegallery/images/view/8ed8b28bf1561e91b1fad1598b34702cd946c5a0.jpg`
-    },
-    answers: {
-      question1: `photo`,
-      question2: `paint`
-    }
+    options: [
+      {
+        question: `http://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/12/2005/09/lowresmagnum.jpg`,
+        answer: `photo`
+      },
+      {
+        question: `https://artlogic-res.cloudinary.com/w_1200,h_1000,c_limit,f_auto,fl_lossy/artlogicstorage/plusonegallery/images/view/8ed8b28bf1561e91b1fad1598b34702cd946c5a0.jpg`,
+        answer: `paint`
+      }
+    ]
   },
   {
     type: `1pic`,
-    img: `https://s-media-cache-ak0.pinimg.com/originals/31/dc/4f/31dc4f9c572c71190174fb38d82222e1.jpg`,
-    answer: `paint`
+    options: [{
+      question: `https://s-media-cache-ak0.pinimg.com/originals/31/dc/4f/31dc4f9c572c71190174fb38d82222e1.jpg`,
+      answer: `paint`
+    }]
   },
   {
     type: `paint`,
@@ -96,64 +108,39 @@ const levels = [
       `https://s00.yaplakal.com/pics/pics_original/0/6/9/10056960.jpg`]),
     answer: `https://s00.yaplakal.com/pics/pics_original/0/6/9/10056960.jpg`
   },
-
   {
     type: `1pic`,
-    img: `https://190330.selcdn.ru/prmira/2016/11/7/%D0%BA%D0%B0%D1%80%D0%B0.jpg`,
-    answer: `photo`
+    options: [{
+      question: `https://190330.selcdn.ru/prmira/2016/11/7/%D0%BA%D0%B0%D1%80%D0%B0.jpg`,
+      answer: `photo`
+    }]
   }
 ];
 
-const RIGHT_ANSWER = 1;
-const FAST_ANSWER = 2;
-const SLOW_ANSWER = 3;
-const WRONG_ANSWER = 0;
-
-const RIGHT_ANSWER_SCORE = 100;
-const FAST_ANSWER_SCORE = 50;
-const SLOW_ANSWER_SCORE = -50;
-const LIVE_SCORE = 50;
-
-const amountAnswers = 10;
-
-const countFinalScores = (answers, lives) => {
-  if (answers.length < amountAnswers) {
-    return -1;
-  } else {
-    let finallyScores = answers.reduce((sum, answer) => {
-      switch (answer) {
-        case RIGHT_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE;
-        case FAST_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE + FAST_ANSWER_SCORE;
-        case SLOW_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE + SLOW_ANSWER_SCORE;
-      }
-
-      return sum;
-    }, 0);
-    return finallyScores + lives * LIVE_SCORE;
-  }
+const ANSWERS = {
+  RIGHT: 1,
+  FAST: 2,
+  SLOW: 3,
+  WRONG: 0
 };
 
-const copyOnWrite = (object) => {
-  let newObj = Object.assign({}, object);
-  for (const key in newObj) {
-    if (newObj[key] instanceof Array) {
-      newObj[key] = newObj[key].slice();
-    }
-  }
-  return newObj;
+const ANSWER_SCORES = {
+  RIGHT: 100,
+  FAST: 50,
+  SLOW: -50,
+  LIVE: 50
 };
 
-const resultLevel = (score) => {
-  if (score === RIGHT_ANSWER) {
+const FAIL_GAME = -1;
+
+const resultLevel = (type) => {
+  if (type === ANSWERS.RIGHT) {
     return `<li class="stats__result stats__result--correct"></li>`;
-  } else if (score === FAST_ANSWER) {
+  } else if (type === ANSWERS.FAST) {
     return `<li class="stats__result stats__result--fast"></li>`;
-  } else if (score === SLOW_ANSWER) {
+  } else if (type === ANSWERS.SLOW) {
     return `<li class="stats__result stats__result--slow"></li>`;
-  } else if (score === WRONG_ANSWER) {
+  } else if (type === ANSWERS.WRONG) {
     return `<li class="stats__result stats__result--wrong"></li>`;
   }
 
@@ -161,10 +148,9 @@ const resultLevel = (score) => {
 };
 
 const getListStatsTemplate = (data) => {
-  return `
-  <ul class="stats">
-      ${data.map((score) => resultLevel(score)).join(``)}
-      ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}</ul>`;
+  return `<ul class="stats">
+    ${data.map((score) => resultLevel(score)).join(``)}
+    ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}</ul>`;
 };
 
 const userStat = (data) => {
@@ -174,6 +160,91 @@ const userStat = (data) => {
   </div>`;
 
   return getElementFromTemplate(stats);
+};
+
+const amountAnswers = 10;
+
+const countFinalScores = (answers, lives) => {
+  if (answers.length < amountAnswers) {
+    return FAIL_GAME;
+  } else {
+    let finallyScores = answers.reduce((sum, answer) => {
+      switch (answer) {
+        case ANSWERS.RIGHT:
+          return sum + ANSWER_SCORES.RIGHT;
+        case ANSWERS.FAST:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.FAST;
+        case ANSWERS.SLOW:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.SLOW;
+      }
+
+      return sum;
+    }, 0);
+    return finallyScores + lives * ANSWER_SCORES.LIVE;
+  }
+};
+
+
+
+const copy = (object) => {
+  let newObj = Object.assign({}, object);
+  for (const key in newObj) {
+    if (newObj[key] instanceof Array) {
+      newObj[key] = newObj[key].slice();
+    }
+  }
+  return newObj;
+};
+
+const resize = (frame, given) => {
+  let pictureWidth = 0;
+  let pictureHeight = 0;
+  let proportion = 1;
+
+  if (given.width > given.height) {
+    pictureWidth = frame.width;
+    proportion = frame.width / given.width;
+    pictureHeight = given.height * proportion;
+  } else {
+    pictureHeight = frame.height;
+    proportion = frame.height / given.height;
+    pictureWidth = given.width * proportion;
+  }
+
+  if (pictureHeight > frame.height) {
+    proportion = frame.height / pictureHeight;
+    pictureHeight = frame.height;
+    pictureWidth = pictureWidth * proportion;
+  } else if (pictureWidth > frame.width) {
+    proportion = frame.width / pictureWidth;
+    pictureWidth = frame.width;
+    pictureHeight = pictureHeight * proportion;
+  }
+  return {
+    width: pictureWidth,
+    height: pictureHeight
+  };
+};
+
+
+const resizeImages = (el) => {
+  const images = Array.prototype.slice.call(el.querySelectorAll(`img`));
+
+  images.forEach((img) => {
+    img.onload = () => {
+      const frameSize = {
+        width: img.parentElement.clientWidth,
+        height: img.parentElement.clientHeight
+      };
+      const imgSize = {
+        width: img.naturalWidth,
+        height: img.naturalHeight
+      };
+      const resizePicture = resize(frameSize, imgSize);
+      img.width = resizePicture.width;
+      img.height = resizePicture.height;
+    };
+  });
 };
 
 const game3Template = (data) => {
@@ -191,6 +262,12 @@ const game3Template = (data) => {
 const element$3 = (level, userDataGame) => {
   let el = getElementFromTemplate(game3Template(level));
   el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+
+  const frameSize = {
+    width: 304,
+    height: 455
+  };
+  resizeImages(el, frameSize);
 
   const pictures = Array.prototype.slice.call(el.querySelectorAll(`.game__option`));
 
@@ -210,7 +287,7 @@ const game2Template = (data) => {
     <p class="game__task">Угадай, фото или рисунок?</p>
     <form class="game__content  game__content--wide">
       <div class="game__option">
-        <img src="${data.img}" alt="Option 1" width="705" height="455">
+        <img src="${data.options[0].question}" alt="Option 1" width="705" height="455">
         <label class="game__answer  game__answer--photo">
           <input name="question1" type="radio" value="photo">
           <span>Фото</span>
@@ -228,11 +305,17 @@ const element$4 = (level, userDataGame) => {
   let el = getElementFromTemplate(game2Template(level));
   el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
 
+  const frameSize = {
+    width: 705,
+    height: 455
+  };
+  resizeImages(el, frameSize);
+
   const radioBtns = Array.prototype.slice.call(el.querySelectorAll(`input[type=radio]`));
 
   radioBtns.forEach((radioBtn) => {
     radioBtn.addEventListener(`change`, (ev) => {
-      const isCorrectAnswer = ev.target.value === level.answer;
+      const isCorrectAnswer = ev.target.value === level.options[0].answer;
       nextLevel(userDataGame, isCorrectAnswer);
     });
   });
@@ -245,28 +328,34 @@ const game1Template = (data) => {
   <div class="game">
     <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
     <form class="game__content">
-      ${[...Object.entries(data.options)].map(([option], i) => `<div class="game__option">
-        <img src="${data.options[option]}" alt="Option ${i+1}" width="468" height="458">
+      ${data.options.map((option, i) => `<div class="game__option">
+        <img src="${option.question}" alt="Option ${i + 1}" width="468" height="458">
         <label class="game__answer game__answer--photo">
-          <input name="question${i+1}" type="radio" value="photo">
-            <span>Фото</span>
+          <input name="question${i + 1}" type="radio" value="photo">
+          <span>Фото</span>
         </label>
         <label class="game__answer game__answer--paint">
-          <input name="question${i+1}" type="radio" value="paint">
-            <span>Рисунок</span>
-          </label>
-        </div>`).join(``)}
+          <input name="question${i + 1}" type="radio" value="paint">
+          <span>Рисунок</span>
+        </label>
+      </div>`).join(``)}
     </form>
   </div>`;
 };
 
-const checkQuestion = (answers, a1, a2) => {
-  return answers.question1 === a1 && answers.question2 === a2;
+const checkQuestion = (options, a1, a2) => {
+  return options[0].answer === a1 && options[1].answer === a2;
 };
 
 const element$5 = (level, userDataGame) => {
   let el = getElementFromTemplate(game1Template(level));
   el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+
+  const frameSize = {
+    width: 468,
+    height: 458
+  };
+  resizeImages(el, frameSize);
 
   const radioBtns = Array.prototype.slice.call(el.querySelectorAll(`input[type=radio]`));
 
@@ -281,7 +370,7 @@ const element$5 = (level, userDataGame) => {
       }
 
       if (q1 && q2) {
-        const isCorrectAnswer = checkQuestion(level.answers, q1, q2);
+        const isCorrectAnswer = checkQuestion(level.options, q1, q2);
         nextLevel(userDataGame, isCorrectAnswer);
       }
     });
@@ -301,7 +390,7 @@ const getDetailScores = (dataGame, typeAnswer, typeAnswerScore) => {
 const getResultGame = (statUser, indexGame, lives) => {
   const finalScores = countFinalScores(statUser, lives);
 
-  if (finalScores !== -1) {
+  if (finalScores !== FAIL_GAME) {
     return `
     <table class="result__table">
         <tr>
@@ -311,40 +400,40 @@ const getResultGame = (statUser, indexGame, lives) => {
               ${getListStatsTemplate(statUser)}
             </ul>
           </td>
-          <td class="result__points">×&nbsp;${RIGHT_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, RIGHT_ANSWER, RIGHT_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.RIGHT, ANSWER_SCORES.RIGHT)}
           </td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за скорость:</td>
           <td class="result__extra">
-            ${getAmountTypeAnswer(statUser, FAST_ANSWER)}&nbsp;
+            ${getAmountTypeAnswer(statUser, ANSWERS.FAST)}&nbsp;
             <span class="stats__result stats__result--fast"></span>
           </td>
-          <td class="result__points">×&nbsp;${FAST_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.FAST}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, FAST_ANSWER, FAST_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.FAST, ANSWER_SCORES.FAST)}
           </td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Бонус за жизни:</td>
           <td class="result__extra">${lives}&nbsp;<span class="stats__result stats__result--alive"></span></td>
-          <td class="result__points">×&nbsp;${LIVE_SCORE}</td>
-          <td class="result__total">${lives * LIVE_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.LIVE}</td>
+          <td class="result__total">${lives * ANSWER_SCORES.LIVE}</td>
         </tr>
         <tr>
           <td></td>
           <td class="result__extra">Штраф за медлительность:</td>
           <td class="result__extra">
-            ${getAmountTypeAnswer(statUser, SLOW_ANSWER)}&nbsp;
+            ${getAmountTypeAnswer(statUser, ANSWERS.SLOW)}&nbsp;
             <span class="stats__result stats__result--slow"></span>
           </td>
-          <td class="result__points">×&nbsp;${SLOW_ANSWER_SCORE}</td>
+          <td class="result__points">×&nbsp;${ANSWER_SCORES.SLOW}</td>
           <td class="result__total">
-            ${getDetailScores(statUser, SLOW_ANSWER, SLOW_ANSWER_SCORE)}
+            ${getDetailScores(statUser, ANSWERS.SLOW, ANSWER_SCORES.SLOW)}
           </td>
         </tr>
         <tr>
@@ -372,7 +461,7 @@ const getResultGame = (statUser, indexGame, lives) => {
 
 const getTitleStat = (stats, lives) => {
   const finalScores = countFinalScores(stats, lives);
-  return (finalScores === -1) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
+  return (finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
 };
 
 const statsTemplate = (dataGames) => {
@@ -391,7 +480,7 @@ const gameTemplates = {
 };
 
 const nextLevel = (userDataGame, isCorrectAnswer) => {
-  const nextLevelDataGame = copyOnWrite(userDataGame);
+  const nextLevelDataGame = copy(userDataGame);
   if (isCorrectAnswer) {
     nextLevelDataGame.level++;
     nextLevelDataGame.stats.push(1);
@@ -403,7 +492,7 @@ const nextLevel = (userDataGame, isCorrectAnswer) => {
 
 
   if (nextLevelDataGame.lives && nextLevelDataGame.level < 10) {
-    const levelData = levels[nextLevelDataGame.level];
+    const levelData = questionsList[nextLevelDataGame.level];
     const template = gameTemplates[levelData.type](levelData, nextLevelDataGame);
 
     return changeTemplate(template, `game`, nextLevelDataGame);
@@ -511,8 +600,8 @@ const mainScreen = document.querySelector(`main`);
 
 const changeTemplate = (template, modeHeader, dataGame) => {
   mainScreen.innerHTML = ``;
-  const headerTemplate = element(dataGame, modeHeader);
-  if (headerTemplate) {
+  if (modeHeader) {
+    const headerTemplate = element(dataGame, modeHeader);
     mainScreen.appendChild(headerTemplate);
   }
   mainScreen.appendChild(template);
