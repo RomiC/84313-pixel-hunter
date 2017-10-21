@@ -46,7 +46,9 @@ export const copy = (object) => {
 };
 
 export const resize = (frame, given) => {
-  let pictureWidth, pictureHeight, proportion;
+  let pictureWidth = 0;
+  let pictureHeight = 0;
+  let proportion = 1;
 
   if (given.width > given.height) {
     pictureWidth = frame.width;
@@ -58,8 +60,41 @@ export const resize = (frame, given) => {
     pictureWidth = given.width * proportion;
   }
 
+  if (pictureHeight > frame.height) {
+    proportion = frame.height / pictureHeight;
+    pictureHeight = frame.height;
+    pictureWidth = pictureWidth * proportion;
+  } else if (pictureWidth > frame.width) {
+    proportion = frame.width / pictureWidth;
+    pictureWidth = frame.width;
+    pictureHeight = pictureHeight * proportion;
+  }
+
   return {
     width: pictureWidth,
     height: pictureHeight
-  }
+  };
 };
+
+
+export const resizeImages = (el) => {
+  const images = Array.prototype.slice.call(el.querySelectorAll(`img`));
+
+  images.forEach((img) => {
+    img.onload = () => {
+      const frameSize = {
+        width: img.parentElement.clientWidth,
+        height: img.parentElement.clientHeight
+      };
+      const imgSize = {
+        width: img.naturalWidth,
+        height: img.naturalHeight
+      };
+      const resizePicture = resize(frameSize, imgSize);
+      img.width = resizePicture.width;
+      img.height = resizePicture.height;
+    };
+  });
+};
+
+

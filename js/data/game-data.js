@@ -22,7 +22,7 @@ const questionsList = [
   {
     type: `1pic`,
     options: [{
-      question: `https://k42.kn3.net/D2F0370D6.jpg`,
+      question: `https://picfan.net/uploads/posts/2016-10/1477143762_14-porazitelnyy-giperrealizm-kartin-hudozhnika-leona-fushe.jpg`,
       answer: `paint`
     }]
   },

@@ -1,6 +1,7 @@
 import getElementFromTemplate from '../create-DOM.js';
 import {userStat} from './user-stat.js';
 import nextLevel from '../data/next-level.js';
+import {resizeImages} from '../data/game-utility.js';
 
 const game3Template = (data) => {
   return `
@@ -17,6 +18,12 @@ const game3Template = (data) => {
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game3Template(level));
   el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+
+  const frameSize = {
+    width: 304,
+    height: 455
+  };
+  resizeImages(el, frameSize);
 
   const pictures = Array.prototype.slice.call(el.querySelectorAll(`.game__option`));
 

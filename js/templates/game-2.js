@@ -1,6 +1,7 @@
 import getElementFromTemplate from '../create-DOM.js';
 import {userStat} from './user-stat.js';
 import nextLevel from '../data/next-level.js';
+import {resizeImages} from '../data/game-utility.js';
 
 const game2Template = (data) => {
   return `
@@ -25,6 +26,12 @@ const game2Template = (data) => {
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game2Template(level));
   el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+
+  const frameSize = {
+    width: 705,
+    height: 455
+  };
+  resizeImages(el, frameSize);
 
   const radioBtns = Array.prototype.slice.call(el.querySelectorAll(`input[type=radio]`));
 
