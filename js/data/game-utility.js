@@ -69,7 +69,7 @@ export const resize = (frame, given) => {
     pictureWidth = frame.width;
     pictureHeight = pictureHeight * proportion;
   }
-
+  
   return {
     width: pictureWidth,
     height: pictureHeight
