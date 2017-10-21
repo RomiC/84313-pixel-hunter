@@ -69,7 +69,7 @@ describe(`game data test`, () => {
 
 
 const createTestForFrame = (frame) => {
-    const assertRatio = (given, expected) => {
+  const assertRatio = (given, expected) => {
     const actual = resize(frame, given);
     assert.deepEqual(actual, expected);
   };
