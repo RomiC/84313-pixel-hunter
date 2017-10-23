@@ -1,8 +1,8 @@
-import getElementFromTemplate from '../create-DOM.js';
-import changeTemplate from '../change-template.js';
-import rulesTemplate from './rules.js';
+import AbstractView from '../../abstract-view.js';
 
-const greetingTemplate = `
+export default class GreetingView extends AbstractView {
+  get template() {
+    return `
   <div class="greeting central--blur">
     <div class="greeting__logo"><img src="img/logo_big.png" width="201" height="89" alt="Pixel Hunter"></div>
     <h1 class="greeting__asterisk">*</h1>
@@ -15,14 +15,16 @@ const greetingTemplate = `
         Помни, главное — смотреть очень внимательно.</p>
     </div>
     <div class="greeting__continue"><span><img src="img/arrow_right.svg" width="64" height="64" alt="Next"></span></div>
-  </div>`;
+  </div>`.trim();
+  }
 
-const element = getElementFromTemplate(greetingTemplate);
+  bind() {
+    this._element.querySelector(`.greeting__continue`).addEventListener(`click`, (event) => {
+      event.preventDefault();
+      this.showNextPage();
+    });
+  }
 
-element.querySelector(`.greeting__continue`).addEventListener(`click`, (event) => {
-  event.preventDefault();
-  changeTemplate(rulesTemplate, `on`);
-});
-
-export default element;
-
+  showNextPage() {
+  }
+}

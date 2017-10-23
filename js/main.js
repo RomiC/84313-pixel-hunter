@@ -1,4 +1,4 @@
 import changeTemplate from './change-template.js';
-import introTemplate from './templates/intro.js';
+import intro from './screens/intro/intro.js';
 
-changeTemplate(introTemplate);
+changeTemplate(intro().element);

@@ -1,8 +1,8 @@
-import getElementFromTemplate from '../create-DOM.js';
-import {initialGame} from '../data/game-data.js';
-import nextLevel from '../data/next-level.js';
+import AbstractView from '../../abstract-view.js';
 
-const rulesTemplate = `
+export default class RulesView extends AbstractView {
+  get template() {
+    return `
   <div class="rules">
     <h1 class="rules__title">Правила</h1>
     <p class="rules__description">Угадай 10 раз для каждого изображения фото <img
@@ -18,19 +18,22 @@ const rulesTemplate = `
       <input class="rules__input" type="text" placeholder="Ваше Имя">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
-  </div>`;
+  </div>`.trim();
+  }
 
-const element = getElementFromTemplate(rulesTemplate);
+  bind() {
+    const rulesInput = this._element.querySelector(`.rules__input`);
+    const rulesBtn = this._element.querySelector(`.rules__button`);
+    rulesInput.addEventListener(`keyup`, () => {
+      rulesBtn.disabled = rulesInput.value.length === 0;
+    });
 
-const rulesInput = element.querySelector(`.rules__input`);
-const rulesBtn = element.querySelector(`.rules__button`);
-rulesInput.addEventListener(`keyup`, () => {
-  rulesBtn.disabled = rulesInput.value.length === 0;
-});
+    rulesBtn.addEventListener(`click`, (event) => {
+      event.preventDefault();
+      this.showNextLevel();
+    });
+  }
 
-rulesBtn.addEventListener(`click`, (event) => {
-  event.preventDefault();
-  nextLevel(initialGame);
-});
-
-export default element;
+  showNextLevel() {
+  }
+}

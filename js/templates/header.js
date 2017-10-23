@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../create-DOM.js';
 import changeTemplate from '../change-template.js';
-import greetingTemplate from './greeting.js';
+import greetingTemplate from './../screens/greeting/greeting.js';
 
 const headerGameTemplate = (data) => {
   return `

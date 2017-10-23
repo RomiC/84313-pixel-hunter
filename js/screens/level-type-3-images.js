@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../create-DOM.js';
-import {userStat} from './user-stat.js';
+import {userStat} from './../templates/user-stat.js';
 import nextLevel from '../data/next-level.js';
 import {resizeImages} from '../data/game-utility.js';
 

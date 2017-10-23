@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../create-DOM.js';
-import {getListStatsTemplate} from './user-stat.js';
+import {getListStatsTemplate} from './../templates/user-stat.js';
 import {countFinalScores} from '../data/game-utility.js';
 import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from '../data/constants.js';
 
