@@ -11,10 +11,10 @@ export default class Level3ImgsView extends AbstractView {
     return `
     <div class="game">
       <p class="game__task">Найдите рисунок среди изображений</p>
-    <form class="game__content  game__content--triple">
+      <form class="game__content  game__content--triple">
         ${[...this._level.options].map((option) => `<div class="game__option">
-          <img src="${option}" alt="Option 1" width="304" height="455">
-    </div>`).join(``)}
+            <img src="${option}" alt="Option 1" width="304" height="455">
+        </div>`).join(``)}
       </form>
     </div>`.trim();
   }

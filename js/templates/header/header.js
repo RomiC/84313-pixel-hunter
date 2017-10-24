@@ -4,7 +4,7 @@ import greetingPage from '../../screens/greeting/greeting.js';
 
 export default (mode, dataGame) => {
   const header = new HeaderView(mode, dataGame);
-  header.returnToGreetingPage = () => {
+  header.showGreetingPage = () => {
     changeTemplate(greetingPage().element);
   };
   return header;

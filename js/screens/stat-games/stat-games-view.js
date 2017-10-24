@@ -17,20 +17,20 @@ export default class StatGamesView extends AbstractView {
     super();
     this._statUser = userDataGame.stats;
     this._lives = userDataGame.lives;
-    this.dataGames = dataGames;
-    this.finalScores = countFinalScores(this._statUser, this._lives);
+    this._dataGames = dataGames;
+    this._finalScores = countFinalScores(this._statUser, this._lives);
   }
 
   get template() {
     return`
       <div class="result">
         ${ this.titleStat }
-        ${ this.dataGames.map((game, i) => this.getResultGame(i + 1)).join(``)}
+        ${ this._dataGames.map((game, i) => this.getResultGame(i + 1)).join(``)}
       </div>`.trim();
   }
 
   get titleStat() {
-    return (this.finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
+    return (this._finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
   };
 
   bind() {
@@ -38,7 +38,7 @@ export default class StatGamesView extends AbstractView {
   }
 
   getResultGame(indexGame) {
-    if (this.finalScores !== FAIL_GAME) {
+    if (this._finalScores !== FAIL_GAME) {
       return `
       <table class="result__table">
           <tr>
@@ -84,7 +84,7 @@ export default class StatGamesView extends AbstractView {
           </tr>
           <tr>
             <td colspan="5" class="result__total  result__total--final">
-              ${this.finalScores}
+              ${this._finalScores}
             </td>
           </tr>
         </table>`;
