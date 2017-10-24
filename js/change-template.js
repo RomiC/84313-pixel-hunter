@@ -6,7 +6,7 @@ const mainScreen = document.querySelector(`main`);
 const changeTemplate = (template, modeHeader, dataGame) => {
   mainScreen.innerHTML = ``;
   if (modeHeader) {
-    const headerTemplate = header(modeHeader,dataGame).element;
+    const headerTemplate = header(modeHeader, dataGame).element;
     mainScreen.appendChild(headerTemplate);
   }
   mainScreen.appendChild(template);

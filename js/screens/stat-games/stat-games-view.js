@@ -22,7 +22,7 @@ export default class StatGamesView extends AbstractView {
   }
 
   get template() {
-    return`
+    return `
       <div class="result">
         ${ this.titleStat }
         ${ this._dataGames.map((game, i) => this.getResultGame(i + 1)).join(``)}
@@ -31,10 +31,9 @@ export default class StatGamesView extends AbstractView {
 
   get titleStat() {
     return (this._finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
-  };
+  }
 
   bind() {
-
   }
 
   getResultGame(indexGame) {

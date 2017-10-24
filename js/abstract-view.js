@@ -25,4 +25,4 @@ export default class AbstractView {
 
     return this._element;
   }
-};
+}
