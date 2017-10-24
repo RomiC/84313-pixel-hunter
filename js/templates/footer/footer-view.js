@@ -1,6 +1,8 @@
-import getElementFromTemplate from '../create-DOM.js';
+import AbstractView from '../../abstract-view.js';
 
-const footerTemplate = `
+export default class FooterView extends AbstractView {
+  get template() {
+    return `
    <footer class="footer">
     <a href="https://htmlacademy.ru" class="social-link social-link--academy">HTML Academy</a>
     <span class="footer__made-in">Сделано в <a href="https://htmlacademy.ru" class="footer__link">HTML Academy</a> &copy; 2016</span>
@@ -10,6 +12,9 @@ const footerTemplate = `
       <a href="https://www.facebook.com/htmlacademy" class="social-link  social-link--fb">Фэйсбук</a>
       <a href="https://vk.com/htmlacademy" class="social-link  social-link--vk">Вконтакте</a>
     </div>
-  </footer>`;
+  </footer>`.trim();
+  }
 
-export default getElementFromTemplate(footerTemplate);
+  bind() {
+  }
+}

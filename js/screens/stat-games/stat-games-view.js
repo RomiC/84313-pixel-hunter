@@ -1,7 +1,7 @@
 import AbstractView from '../../abstract-view.js';
-import {getListStatsTemplate} from './../../templates/user-stat.js';
 import {countFinalScores} from '../../data/game-utility.js';
 import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from '../../data/constants.js';
+import userStat from '../../templates/user-stat/user-stat.js';
 
 
 const getAmountTypeAnswer = (dataGame, typeAnswer) => {
@@ -33,6 +33,10 @@ export default class StatGamesView extends AbstractView {
     return (this.finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
   };
 
+  bind() {
+
+  }
+
   getResultGame(indexGame) {
     if (this.finalScores !== FAIL_GAME) {
       return `
@@ -40,9 +44,7 @@ export default class StatGamesView extends AbstractView {
           <tr>
             <td class="result__number">${indexGame}.</td>
             <td colspan="2">
-              <ul class="stats">
-                ${getListStatsTemplate(this._statUser)}
-              </ul>
+              ${userStat(this._statUser).template}
             </td>
             <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
             <td class="result__total">
@@ -93,9 +95,7 @@ export default class StatGamesView extends AbstractView {
       <tr>
         <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            <ul class="stats">
-              ${getListStatsTemplate(this._statUser)}
-            </ul>
+            ${userStat(this._statUser).template}
           </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
