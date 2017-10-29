@@ -21,7 +21,6 @@ class GameScreen {
   }
 
   init(state = initialGame) {
-    this._state = state;
     const levelData = questionsList[this._state.level];
     this.view = new gameTemplates[levelData.type](levelData);
     this.view.showNextLevel = () => {
@@ -48,8 +47,9 @@ class GameScreen {
       this.model.setLastLevelStat(ANSWERS.WRONG);
     }
 
+    this._state = this.model._state;
     if (this.model.userInGame()) {
-      this.init(this.model._state);
+      this.init(this._state);
     } else {
       this.lose();
     }
@@ -71,4 +71,4 @@ class GameScreen {
   }
 }
 
-export default new GameScreen();
+export default (state) => new GameScreen(state);

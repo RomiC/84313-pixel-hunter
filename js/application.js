@@ -18,7 +18,7 @@ export default class Application {
   }
 
   static showGame() {
-    GameScreen.init();
+    GameScreen().init();
   }
 
   static showStats(stats) {
