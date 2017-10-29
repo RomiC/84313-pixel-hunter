@@ -1,4 +1,4 @@
-import {ANSWERS, ANSWER_SCORES, FAIL_GAME, MAX_TIME_QUESTION} from './constants.js';
+import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
 
 const amountAnswers = 10;
 
@@ -22,14 +22,13 @@ export const countFinalScores = (answers, lives) => {
   }
 };
 
-export const createTimer = (gameData, timeInSecond, msg = ``) => {
+export const createTimer = (timeInSecond, msg = ``) => {
   const timer = {
     time: timeInSecond > 0 ? timeInSecond : 0,
-    tick(gameData) {
-      const data = copy(gameData);
-      const value = data.time++;
-      const msgTick = (value === MAX_TIME_QUESTION) ? `Timer stopped` : ``;
-      return createTimer(data, value, msgTick);
+    tick() {
+      const value = timer.time - 1;
+      const msgTick = (value === 0) ? `Timer stopped` : ``;
+      return createTimer(value > 0 ? value : 0, msgTick);
     },
     msg
   };

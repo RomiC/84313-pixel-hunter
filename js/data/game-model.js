@@ -1,4 +1,4 @@
-import {nextLevel, spendLives, setLastLevelStat, createTimer, tick} from './game-utility.js';
+import {nextLevel, spendLives, setLastLevelStat, tick} from './game-utility.js';
 import {initialGame} from './game-data.js';
 
 export default class GameModel {

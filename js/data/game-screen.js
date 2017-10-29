@@ -57,8 +57,6 @@ class GameScreen {
 
   tick() {
     this.model.tick();
-    //this.updateLevelHeader();
-
     this.timer = setTimeout(() => this.tick(), 1000);
   }
 
