@@ -60,7 +60,7 @@ export const questionsList = [
     options: [
       {
         question: `https://flytothesky.ru/wp-content/uploads/2013/05/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B5-%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D1%8B-%D0%9F%D0%B5%D0%B4%D1%80%D0%BE-%D0%9A%D0%B0%D0%BC%D0%BF%D0%BE%D1%81%D0%B0-13.jpg`,
-        answer: `ONE_PAINT`
+        answer: `paint`
       },
       {
         question: `http://www.rosphoto.com/images/u/articles/1511/4-anastasiya-kostakova.jpg`,

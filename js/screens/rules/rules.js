@@ -1,6 +1,6 @@
-import GameScreen from '../../data/game-screen.js';
 import RulesView from './rules-view.js';
 import changeTemplate from '../../change-template.js';
+import App from '../../application.js';
 
 class RulesScreen {
   init() {
@@ -12,7 +12,7 @@ class RulesScreen {
 
   bind() {
     this._screen.showNextLevel = () => {
-      GameScreen.init();
+      App.showGame();
     };
   }
 }

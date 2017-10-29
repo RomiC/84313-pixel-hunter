@@ -1,8 +1,8 @@
 import changeTemplate from '../change-template.js';
-import level3ImgsView from '../screens/level-type-3-images/level-type-3-images-view.js';
-import level1ImgView from '../screens/level-type-1-image/level-type-1-image-view.js';
+import Level3ImgsView from '../screens/level-type-3-images/level-type-3-images-view.js';
+import Level1ImgView from '../screens/level-type-1-image/level-type-1-image-view.js';
 import Level2ImgsView from '../screens/level-type-2-images/level-type-2-images-view.js';
-import statGames from '../screens/stat-games/stat-games.js';
+import StatGamesView from '../screens/stat-games/stat-games-view.js';
 import {nextLevel, spendLives, setLastLevelStat, questionsList, initialGame} from './game-data.js';
 import userStat from '../templates/user-stat/user-stat.js';
 import {ANSWERS} from './constants.js';
@@ -11,10 +11,9 @@ import GameModel from './game-model.js';
 
 const gameTemplates = {
   TWO_PIC: Level2ImgsView,
-  ONE_PIC: level1ImgView,
-  ONE_PAINT: level3ImgsView
+  ONE_PIC: Level1ImgView,
+  ONE_PAINT: Level3ImgsView
 };
-
 
 class GameScreen {
   constructor(state = initialGame) {
@@ -56,11 +55,8 @@ class GameScreen {
   }
 
   die() {
-    const GAMES = [this._state.stats]; // сейчас одна, т.к. без сохранения
-    const template = statGames(this._state.stats, GAMES).element;
-    return changeTemplate(template, `on`, this.model);
+    App.showStats(this._state);
   }
 }
-
 
 export default new GameScreen();
