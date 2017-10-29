@@ -1,10 +1,20 @@
 import IntroView from './intro-view.js';
 import changeTemplate from '../../change-template.js';
-import greetingPage from './../greeting/greeting.js';
+import App from '../../application.js';
 
-const intro = new IntroView();
-intro.showNextPage = () => {
-  changeTemplate(greetingPage().element);
-};
+class IntroScreen {
+  init() {
+    this._screen = new IntroView();
+    this.bind();
 
-export default () => intro;
+    return changeTemplate(this._screen.element);
+  }
+
+  bind() {
+    this._screen.showNextPage = () => {
+      App.showGreeting();
+    }
+  }
+}
+
+export default new IntroScreen();

@@ -1,4 +1,5 @@
-import changeTemplate from './change-template.js';
-import intro from './screens/intro/intro.js';
+import App from './application.js';
 
-changeTemplate(intro().element);
+App.showWelcome();
+
+
