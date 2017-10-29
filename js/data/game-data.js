@@ -1,33 +1,9 @@
-import {copy} from './game-utility.js';
-
 export const initialGame = Object.freeze({
   level: 0,
   lives: 3,
   time: 0,
   stats: []
 });
-
-export const nextLevel = (gameData) => {
-  const game = copy(gameData);
-  game.level++;
-  return game;
-};
-
-export const spendLives = (gameData) => {
-  const game = copy(gameData);
-  game.lives--;
-  if (game.lives < 0) {
-    throw new RangeError(`Can't set negative lives`);
-  }
-  return game;
-};
-
-
-export const setLastLevelStat = (gameData, answer) => {
-  const game = copy(gameData);
-  game.stats.push(answer);
-  return game;
-};
 
 export const questionsList = [
   {

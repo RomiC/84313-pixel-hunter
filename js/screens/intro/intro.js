@@ -13,7 +13,7 @@ class IntroScreen {
   bind() {
     this._screen.showNextPage = () => {
       App.showGreeting();
-    }
+    };
   }
 }
 

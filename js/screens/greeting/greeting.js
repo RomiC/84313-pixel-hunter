@@ -13,7 +13,7 @@ class GreetingScreen {
   bind() {
     this._screen.showNextPage = () => {
       App.showRules();
-    }
+    };
   }
 }
 

@@ -1,4 +1,4 @@
-import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
+import {ANSWERS, ANSWER_SCORES, FAIL_GAME, MAX_TIME_QUESTION} from './constants.js';
 
 const amountAnswers = 10;
 
@@ -22,17 +22,24 @@ export const countFinalScores = (answers, lives) => {
   }
 };
 
-export const createTimer = (timeInSecond, msg = ``) => {
+export const createTimer = (gameData, timeInSecond, msg = ``) => {
   const timer = {
     time: timeInSecond > 0 ? timeInSecond : 0,
-    tick() {
-      const value = timer.time - 1;
-      const msgTick = (value === 0) ? `Timer stopped` : ``;
-      return createTimer(value > 0 ? value : 0, msgTick);
+    tick(gameData) {
+      const data = copy(gameData);
+      const value = data.time++;
+      const msgTick = (value === MAX_TIME_QUESTION) ? `Timer stopped` : ``;
+      return createTimer(data, value, msgTick);
     },
     msg
   };
   return timer;
+};
+
+export const tick = (game, timeInSec) => {
+  game = copy(game);
+  game.time = timeInSec || game.time++;
+  return game;
 };
 
 export const copy = (object) => {
@@ -44,6 +51,30 @@ export const copy = (object) => {
   }
   return newObj;
 };
+
+
+export const nextLevel = (gameData) => {
+  const game = copy(gameData);
+  game.level++;
+  return game;
+};
+
+export const spendLives = (gameData) => {
+  const game = copy(gameData);
+  game.lives--;
+  if (game.lives < 0) {
+    throw new RangeError(`Can't set negative lives`);
+  }
+  return game;
+};
+
+
+export const setLastLevelStat = (gameData, answer) => {
+  const game = copy(gameData);
+  game.stats.push(answer);
+  return game;
+};
+
 
 export const resize = (frame, given) => {
   let pictureWidth = 0;

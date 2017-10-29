@@ -1,4 +1,5 @@
-import {initialGame, nextLevel, spendLives} from './game-data.js';
+import {nextLevel, spendLives, setLastLevelStat, createTimer, tick} from './game-utility.js';
+import {initialGame} from './game-data.js';
 
 export default class GameModel {
   constructor(state = initialGame) {
@@ -6,10 +7,27 @@ export default class GameModel {
   }
 
   nextLevel() {
-    this._state = nextLevel(this._state);
+    this.update(nextLevel(this._state));
   }
 
   spendLives() {
-    this._state = spendLives(this._state);
+    this.update(spendLives(this._state));
+  }
+
+  setLastLevelStat(answer) {
+    this.update(setLastLevelStat(this._state, answer));
+  }
+
+  userInGame() {
+    return this._state.lives && this._state.level < 10;
+  }
+
+  update(newState) {
+    this._state = newState;
+    return this._state;
+  }
+
+  tick(time) {
+    this._state = tick(this._state, time);
   }
 }
