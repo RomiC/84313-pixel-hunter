@@ -51,7 +51,7 @@ export default class Level2ImgsView extends AbstractView {
         }
 
         if (q1 && q2) {
-          this._isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
+          this.isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
           this.showNextLevel();
         }
       });

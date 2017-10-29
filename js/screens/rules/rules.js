@@ -1,5 +1,4 @@
-import {initialGame} from '../../data/game-data.js';
-import nextLevel from '../../data/next-level.js';
+import GameScreen from '../../data/game-screen.js';
 import RulesView from './rules-view.js';
 import changeTemplate from '../../change-template.js';
 
@@ -13,7 +12,7 @@ class RulesScreen {
 
   bind() {
     this._screen.showNextLevel = () => {
-      nextLevel(null, initialGame);
+      GameScreen.init();
     };
   }
 }

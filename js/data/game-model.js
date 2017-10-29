@@ -6,14 +6,10 @@ export default class GameModel {
   }
 
   nextLevel() {
-    this._state = nextLevel();
+    this._state = nextLevel(this._state);
   }
 
   spendLives() {
-    this._state = spendLives();
-  }
-
-  canDie() {
-    return this._state.lives && this._state.level < 10;
+    this._state = spendLives(this._state);
   }
 }
