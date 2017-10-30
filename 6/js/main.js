@@ -147,19 +147,14 @@ const resultLevel = (type) => {
   return ``;
 };
 
-const getListStatsTemplate = (data) => {
-  return `<ul class="stats">
-    ${data.map((score) => resultLevel(score)).join(``)}
-    ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}</ul>`;
-};
-
 const userStat = (data) => {
-  const stats = `
+  return `
   <div class="stats">
-    ${getListStatsTemplate(data)}
+    <ul class="stats">
+      ${data.map((score) => resultLevel(score)).join(``)}
+      ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
+    </ul>
   </div>`;
-
-  return getElementFromTemplate(stats);
 };
 
 const amountAnswers = 10;
@@ -261,7 +256,7 @@ const game3Template = (data) => {
 
 const element$3 = (level, userDataGame) => {
   let el = getElementFromTemplate(game3Template(level));
-  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+  el.querySelector(`.game`).appendChild(getElementFromTemplate(userStat(userDataGame.stats)));
 
   const frameSize = {
     width: 304,
@@ -303,7 +298,7 @@ const game2Template = (data) => {
 
 const element$4 = (level, userDataGame) => {
   let el = getElementFromTemplate(game2Template(level));
-  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+  el.querySelector(`.game`).appendChild(getElementFromTemplate(userStat(userDataGame.stats)));
 
   const frameSize = {
     width: 705,
@@ -349,7 +344,7 @@ const checkQuestion = (options, a1, a2) => {
 
 const element$5 = (level, userDataGame) => {
   let el = getElementFromTemplate(game1Template(level));
-  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+  el.querySelector(`.game`).appendChild(getElementFromTemplate(userStat(userDataGame.stats)));
 
   const frameSize = {
     width: 468,
@@ -396,9 +391,7 @@ const getResultGame = (statUser, indexGame, lives) => {
         <tr>
           <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            <ul class="stats">
-              ${getListStatsTemplate(statUser)}
-            </ul>
+            ${userStat(statUser)}
           </td>
           <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
           <td class="result__total">
@@ -449,9 +442,7 @@ const getResultGame = (statUser, indexGame, lives) => {
       <tr>
         <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            <ul class="stats">
-              ${getListStatsTemplate(statUser)}
-            </ul>
+            ${userStat(statUser)}
           </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>
