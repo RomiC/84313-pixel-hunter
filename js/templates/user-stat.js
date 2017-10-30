@@ -1,4 +1,3 @@
-import getElementFromTemplate from '../create-DOM.js';
 import {ANSWERS} from '../data/constants.js';
 
 const resultLevel = (type) => {
