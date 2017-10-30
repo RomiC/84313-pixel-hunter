@@ -1,5 +1,5 @@
 import getElementFromTemplate from '../create-DOM.js';
-import {getListStatsTemplate} from './user-stat.js';
+import {userStat} from './user-stat.js';
 import {countFinalScores} from '../data/game-utility.js';
 import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from '../data/constants.js';
 
@@ -20,9 +20,7 @@ const getResultGame = (statUser, indexGame, lives) => {
         <tr>
           <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            <ul class="stats">
-              ${getListStatsTemplate(statUser)}
-            </ul>
+            ${userStat(statUser)}
           </td>
           <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
           <td class="result__total">
@@ -73,9 +71,7 @@ const getResultGame = (statUser, indexGame, lives) => {
       <tr>
         <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            <ul class="stats">
-              ${getListStatsTemplate(statUser)}
-            </ul>
+            ${userStat(statUser)}
           </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>

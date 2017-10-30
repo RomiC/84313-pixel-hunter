@@ -29,7 +29,7 @@ const checkQuestion = (options, a1, a2) => {
 
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game1Template(level));
-  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+  el.querySelector(`.game`).appendChild(getElementFromTemplate(userStat(userDataGame.stats)));
 
   const frameSize = {
     width: 468,

@@ -15,19 +15,14 @@ const resultLevel = (type) => {
   return ``;
 };
 
-export const getListStatsTemplate = (data) => {
-  return `<ul class="stats">
-    ${data.map((score) => resultLevel(score)).join(``)}
-    ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}</ul>`;
-};
-
 export const userStat = (data) => {
-  const stats = `
+  return `
   <div class="stats">
-    ${getListStatsTemplate(data)}
+    <ul class="stats">
+      ${data.map((score) => resultLevel(score)).join(``)}
+      ${new Array(10 - data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
+    </ul>
   </div>`;
-
-  return getElementFromTemplate(stats);
 };
 
 

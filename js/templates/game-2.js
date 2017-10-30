@@ -25,7 +25,7 @@ const game2Template = (data) => {
 
 const element = (level, userDataGame) => {
   let el = getElementFromTemplate(game2Template(level));
-  el.querySelector(`.game`).appendChild(userStat(userDataGame.stats));
+  el.querySelector(`.game`).appendChild(getElementFromTemplate(userStat(userDataGame.stats)));
 
   const frameSize = {
     width: 705,
