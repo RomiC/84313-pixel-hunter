@@ -1,6 +1,6 @@
-import getElementFromTemplate from '../createDOM.js';
-import changeTemplate from '../changeTemplate.js';
-import game1Template from './game-1.js';
+import getElementFromTemplate from '../create-DOM.js';
+import {initialGame} from '../data/game-data.js';
+import nextLevel from '../data/next-level.js';
 
 const rulesTemplate = `
   <div class="rules">
@@ -30,7 +30,7 @@ rulesInput.addEventListener(`keyup`, () => {
 
 rulesBtn.addEventListener(`click`, (event) => {
   event.preventDefault();
-  changeTemplate(game1Template, `game`);
+  nextLevel(initialGame);
 });
 
 export default element;

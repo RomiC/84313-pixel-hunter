@@ -1,4 +1,4 @@
-import getElementFromTemplate from '../createDOM.js';
+import getElementFromTemplate from '../create-DOM.js';
 
 const footerTemplate = `
    <footer class="footer">

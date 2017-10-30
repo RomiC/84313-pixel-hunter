@@ -1,36 +1,28 @@
-const RIGHT_ANSWER = 1;
-const FAST_ANSWER = 2;
-const SLOW_ANSWER = 3;
-
-const RIGHT_ANSWER_SCORE = 100;
-const FAST_ANSWER_SCORE = RIGHT_ANSWER_SCORE + 50;
-const SLOW_ANSWER_SCORE = RIGHT_ANSWER_SCORE - 50;
-const LIVE_SCORE = 50;
+import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
 
 const amountAnswers = 10;
 
-
-const countFinallyScores = (answers, lives) => {
+export const countFinalScores = (answers, lives) => {
   if (answers.length < amountAnswers) {
-    return -1;
+    return FAIL_GAME;
   } else {
     let finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
-        case RIGHT_ANSWER:
-          return sum + RIGHT_ANSWER_SCORE;
-        case FAST_ANSWER:
-          return sum + FAST_ANSWER_SCORE;
-        case SLOW_ANSWER:
-          return sum + SLOW_ANSWER_SCORE;
+        case ANSWERS.RIGHT:
+          return sum + ANSWER_SCORES.RIGHT;
+        case ANSWERS.FAST:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.FAST;
+        case ANSWERS.SLOW:
+          return sum + ANSWER_SCORES.RIGHT + ANSWER_SCORES.SLOW;
       }
 
       return sum;
     }, 0);
-    return finallyScores + lives * LIVE_SCORE;
+    return finallyScores + lives * ANSWER_SCORES.LIVE;
   }
 };
 
-const createTimer = (timeInSecond, msg = ``) => {
+export const createTimer = (timeInSecond, msg = ``) => {
   const timer = {
     time: timeInSecond > 0 ? timeInSecond : 0,
     tick() {
@@ -43,4 +35,65 @@ const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-export {countFinallyScores, createTimer};
+export const copy = (object) => {
+  let newObj = Object.assign({}, object);
+  for (const key in newObj) {
+    if (newObj[key] instanceof Array) {
+      newObj[key] = newObj[key].slice();
+    }
+  }
+  return newObj;
+};
+
+export const resize = (frame, given) => {
+  let pictureWidth = 0;
+  let pictureHeight = 0;
+  let proportion = 1;
+
+  if (given.width > given.height) {
+    pictureWidth = frame.width;
+    proportion = frame.width / given.width;
+    pictureHeight = given.height * proportion;
+  } else {
+    pictureHeight = frame.height;
+    proportion = frame.height / given.height;
+    pictureWidth = given.width * proportion;
+  }
+
+  if (pictureHeight > frame.height) {
+    proportion = frame.height / pictureHeight;
+    pictureHeight = frame.height;
+    pictureWidth = pictureWidth * proportion;
+  } else if (pictureWidth > frame.width) {
+    proportion = frame.width / pictureWidth;
+    pictureWidth = frame.width;
+    pictureHeight = pictureHeight * proportion;
+  }
+  return {
+    width: pictureWidth,
+    height: pictureHeight
+  };
+};
+
+
+export const resizeImages = (el) => {
+  const images = Array.prototype.slice.call(el.querySelectorAll(`img`));
+
+  images.forEach((img) => {
+    img.onload = () => {
+      const frameSize = {
+        width: img.parentElement.clientWidth,
+        height: img.parentElement.clientHeight
+      };
+      const imgSize = {
+        width: img.naturalWidth,
+        height: img.naturalHeight
+      };
+      const resizePicture = resize(frameSize, imgSize);
+      img.width = resizePicture.width;
+      img.height = resizePicture.height;
+    };
+  });
+};
+
+
