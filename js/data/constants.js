@@ -13,11 +13,11 @@ const ANSWER_SCORES = {
 };
 
 const FAIL_GAME = -1;
+
 const TIME = {
   FOR_ANSWER: 30,
   FAST_ANSWER_MAX: 10,
   SLOW_ANSWER_MIN: 20
 };
-const MAX_TIME_QUESTION = -1;
 
 export {ANSWERS, ANSWER_SCORES, FAIL_GAME, TIME};

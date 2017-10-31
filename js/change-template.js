@@ -1,11 +1,10 @@
 import footer from './templates/footer/footer.js';
-import header from './templates/header/header.js';
 
 const mainScreen = document.querySelector(`main`);
 
 const changeTemplate = (template, header) => {
   mainScreen.innerHTML = ``;
-  if(header) {
+  if (header) {
     mainScreen.appendChild(header);
   }
   mainScreen.appendChild(template);

@@ -2,7 +2,7 @@ import IntroScreen from './screens/intro/intro.js';
 import GreetingScreen from './screens/greeting/greeting.js';
 import RulesScreen from './screens/rules/rules.js';
 import StatsScreen from './screens/stat-games/stat-game.js';
-import gameScreen from './data/game-screen.js';
+import gameScreen from './screens/game-screen.js';
 
 export default class Application {
   static showWelcome() {
