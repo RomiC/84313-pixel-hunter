@@ -1,13 +1,13 @@
-import changeTemplate from '../change-template.js';
-import Level3ImgsView from './level-type-3-images/level-type-3-images-view.js';
-import Level1ImgView from './level-type-1-image/level-type-1-image-view.js';
-import Level2ImgsView from './level-type-2-images/level-type-2-images-view.js';
-import {questionsList, initialGame} from './../data/game-data.js';
-import userStat from '../templates/user-stat/user-stat.js';
-import {ANSWERS, TIME} from './../data/constants.js';
-import App from '../application.js';
-import GameModel from './../data/game-model.js';
-import header from '../templates/header/header.js';
+import changeTemplate from '../../change-template.js';
+import Level3ImgsView from './level-type-3-images-view.js';
+import Level1ImgView from './level-type-1-image-view.js';
+import Level2ImgsView from './level-type-2-images-view.js';
+import {questionsList, initialGame} from './../../data/game-data.js';
+import userStat from '../../templates/user-stat/user-stat.js';
+import {ANSWERS, TIME} from './../../data/constants.js';
+import App from '../../application.js';
+import GameModel from './../../data/game-model.js';
+import header from '../../templates/header/header.js';
 
 const gameTemplates = {
   TWO_PIC: Level2ImgsView,
