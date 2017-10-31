@@ -7,6 +7,7 @@ import userStat from '../templates/user-stat/user-stat.js';
 import {ANSWERS} from './constants.js';
 import App from '../application.js';
 import GameModel from './game-model.js';
+import header from '../templates/header/header.js';
 
 const gameTemplates = {
   TWO_PIC: Level2ImgsView,
@@ -32,9 +33,13 @@ class GameScreen {
   }
 
   showNextLevel() {
+    this.header = header(`game`, this._state).init();
+
     const template = this.view.element;
     template.querySelector(`.game`).appendChild(userStat(this._state.stats).element);
-    return changeTemplate(template, `game`, this._state);
+    this.tick();
+
+    return changeTemplate(template, this.header, this._state);
   }
 
   onChooseAnswer(isCorrectAnswer) {
@@ -55,8 +60,15 @@ class GameScreen {
     }
   }
 
+  updateHeader(state) {
+    this.header = header(`game`, state).init();
+    this.headerContainer.innerHTML = ``;
+    this.headerContainer.appendChild(this.header);
+  };
+
   tick() {
-    this.model.tick();
+    this._state = this.model.tick();
+    this.updateHeader(this._state);
     this.timer = setTimeout(() => this.tick(), 1000);
   }
 

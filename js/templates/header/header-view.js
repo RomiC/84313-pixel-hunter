@@ -16,6 +16,7 @@ export default class HeaderView extends AbstractView {
   }
 
   get headerGameTemplate() {
+    console.log(this._data);
     return `
     <header class="header">
       <div class="header__back">

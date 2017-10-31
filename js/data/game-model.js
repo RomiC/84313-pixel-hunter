@@ -28,6 +28,6 @@ export default class GameModel {
   }
 
   tick(time) {
-    this._state = tick(this._state, time);
+    return this.update(tick(this._state, time));
   }
 }

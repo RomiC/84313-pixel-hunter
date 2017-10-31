@@ -35,10 +35,10 @@ export const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
-export const tick = (game, timeInSec) => {
-  game = copy(game);
-  game.time = timeInSec || game.time++;
-  return game;
+export const tick = (game) => {
+  const gameStat = copy(game);
+  gameStat.time = gameStat.time + 1;
+  return gameStat;
 };
 
 export const copy = (object) => {
