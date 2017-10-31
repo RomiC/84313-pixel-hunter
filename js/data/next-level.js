@@ -1,36 +1,45 @@
 import changeTemplate from '../change-template.js';
-import game3Template from '../templates/game-3.js';
-import game2Template from '../templates/game-2.js';
-import game1Template from '../templates/game-1.js';
-import statsTemplate from '../templates/stat-games.js';
+import level3Imgs from '../screens/level-type-3-images/level-type-3-images.js';
+import level1Img from '../screens/level-type-1-image/level-type-1-image.js';
+import level2Imgs from '../screens/level-type-2-images/level-type-2-images.js';
+import statGames from '../screens/stat-games/stat-games.js';
 import {questionsList} from './game-data.js';
 import {copy} from './game-utility.js';
+import userStat from '../templates/user-stat/user-stat.js';
 
 const gameTemplates = {
-  '2pic': game1Template,
-  '1pic': game2Template,
-  'paint': game3Template
+  '2pic': level2Imgs,
+  '1pic': level1Img,
+  'paint': level3Imgs
 };
 
-const nextLevel = (userDataGame, isCorrectAnswer) => {
-  const nextLevelDataGame = copy(userDataGame);
+let userDataGame = null;
+const nextLevel = (isCorrectAnswer, initialData) => {
+  if (initialData) {
+    userDataGame = copy(initialData);
+  }
+
   if (isCorrectAnswer) {
-    nextLevelDataGame.level++;
-    nextLevelDataGame.stats.push(1);
+    userDataGame.level++;
+    userDataGame.stats.push(1);
   } else if (isCorrectAnswer === false) {
-    nextLevelDataGame.level++;
-    nextLevelDataGame.lives--;
-    nextLevelDataGame.stats.push(0);
+    userDataGame.level++;
+    userDataGame.lives--;
+    userDataGame.stats.push(0);
   }
 
 
-  if (nextLevelDataGame.lives && nextLevelDataGame.level < 10) {
-    const levelData = questionsList[nextLevelDataGame.level];
-    const template = gameTemplates[levelData.type](levelData, nextLevelDataGame);
+  if (userDataGame.lives && userDataGame.level < 10) {
+    const levelData = questionsList[userDataGame.level];
+    const levelView = gameTemplates[levelData.type](levelData);
 
-    return changeTemplate(template, `game`, nextLevelDataGame);
+    const template = levelView.element;
+    template.querySelector(`.game`).appendChild(userStat(userDataGame.stats).element);
+    return changeTemplate(template, `game`, userDataGame);
   } else {
-    return changeTemplate(statsTemplate([nextLevelDataGame]), `on`, nextLevelDataGame);
+    const GAMES = [userDataGame]; // сейчас одна, т.к. без сохранения
+    const template = statGames(userDataGame, GAMES).element;
+    return changeTemplate(template, `on`, userDataGame);
   }
 };
 

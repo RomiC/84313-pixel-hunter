@@ -1,0 +1,36 @@
+import {ANSWERS} from '../../data/constants.js';
+import AbstractView from '../../abstract-view.js';
+
+export default class UserStatView extends AbstractView {
+  constructor(data) {
+    super();
+    this._data = data;
+  }
+
+  get template() {
+    return `<div class="stats">
+    <ul class="stats">
+      ${this._data.map((score) => this.resultLevel(score)).join(``)}
+      ${new Array(10 - this._data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
+    </ul>
+  </div>`.trim();
+  }
+
+  resultLevel(type) {
+    if (type === ANSWERS.RIGHT) {
+      return `<li class="stats__result stats__result--correct"></li>`;
+    } else if (type === ANSWERS.FAST) {
+      return `<li class="stats__result stats__result--fast"></li>`;
+    } else if (type === ANSWERS.SLOW) {
+      return `<li class="stats__result stats__result--slow"></li>`;
+    } else if (type === ANSWERS.WRONG) {
+      return `<li class="stats__result stats__result--wrong"></li>`;
+    }
+
+    return ``;
+  }
+
+  bind() {
+  }
+}
+
