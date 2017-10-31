@@ -4,7 +4,7 @@ import Level1ImgView from '../screens/level-type-1-image/level-type-1-image-view
 import Level2ImgsView from '../screens/level-type-2-images/level-type-2-images-view.js';
 import {questionsList, initialGame} from './game-data.js';
 import userStat from '../templates/user-stat/user-stat.js';
-import {ANSWERS} from './constants.js';
+import {ANSWERS, TIME} from './constants.js';
 import App from '../application.js';
 import GameModel from './game-model.js';
 import header from '../templates/header/header.js';
@@ -33,19 +33,29 @@ class GameScreen {
   }
 
   showNextLevel() {
-    this.header = header(`game`, this._state).init();
-
     const template = this.view.element;
     template.querySelector(`.game`).appendChild(userStat(this._state.stats).element);
-    this.tick();
 
-    return changeTemplate(template, this.header, this._state);
+    const headerGame = header(`game`, this._state).init();
+    const screen = changeTemplate(template, headerGame, this._state);
+    this.headerContainer = screen.querySelector(`header`);
+
+    this.tick();
   }
 
   onChooseAnswer(isCorrectAnswer) {
+    const spendTimeOnAnswer = this.stopTimer();
     if (isCorrectAnswer) {
       this.model.nextLevel();
-      this.model.setLastLevelStat(ANSWERS.RIGHT);
+
+      let typeOfAnswer = ANSWERS.RIGHT;
+      if (spendTimeOnAnswer < TIME.FAST_ANSWER_MAX) {
+        typeOfAnswer = ANSWERS.FAST;
+      } else if (spendTimeOnAnswer > TIME.SLOW_ANSWER_MIN) {
+        typeOfAnswer = ANSWERS.SLOW;
+      }
+
+      this.model.setLastLevelStat(typeOfAnswer);
     } else {
       this.model.nextLevel();
       this.model.spendLives();
@@ -61,19 +71,25 @@ class GameScreen {
   }
 
   updateHeader(state) {
-    this.header = header(`game`, state).init();
+    const headerGame = header(`game`, state).init();
     this.headerContainer.innerHTML = ``;
-    this.headerContainer.appendChild(this.header);
+    this.headerContainer.appendChild(headerGame);
   };
 
   tick() {
     this._state = this.model.tick();
     this.updateHeader(this._state);
+    if (this._state.time === TIME.FOR_ANSWER) {
+      this.onChooseAnswer(false);
+    }
     this.timer = setTimeout(() => this.tick(), 1000);
   }
 
   stopTimer() {
+    const time = this._state.time;
+    this.model.stopTimer();
     clearTimeout(this.timer);
+    return time;
   }
 
   lose() {

@@ -1,13 +1,15 @@
 import GreetingViews from './greeting-views.js';
 import changeTemplate from '../../change-template.js';
 import App from '../../application.js';
+import header from '../../templates/header/header.js';
 
 class GreetingScreen {
   init() {
     this._screen = new GreetingViews();
     this.bind();
 
-    return changeTemplate(this._screen.element, `on`);
+    const headerScreen = header(`on`, this._state).init();
+    return changeTemplate(this._screen.element, headerScreen);
   }
 
   bind() {

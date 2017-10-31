@@ -18,6 +18,11 @@ export default class GameModel {
     this.update(setLastLevelStat(this._state, answer));
   }
 
+  stopTimer() {
+    this._state.time = 0;
+    this.update(this._state);
+  }
+
   userInGame() {
     return this._state.lives && this._state.level < 10;
   }

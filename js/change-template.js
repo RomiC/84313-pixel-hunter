@@ -3,17 +3,15 @@ import header from './templates/header/header.js';
 
 const mainScreen = document.querySelector(`main`);
 
-const changeTemplate = (template, header, dataGame) => {
+const changeTemplate = (template, header) => {
   mainScreen.innerHTML = ``;
-  //if (modeHeader) {
-  //  const headerTemplate = header(modeHeader, dataGame).element;
-  //  mainScreen.appendChild(headerTemplate);
-  //}
-  if(header && header !== `on`) {
+  if(header) {
     mainScreen.appendChild(header);
   }
   mainScreen.appendChild(template);
   mainScreen.appendChild(footer().element);
+
+  return mainScreen;
 };
 
 export default changeTemplate;
