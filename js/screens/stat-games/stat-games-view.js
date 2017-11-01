@@ -13,11 +13,11 @@ const getDetailScores = (dataGame, typeAnswer, typeAnswerScore) => {
 };
 
 export default class StatGamesView extends AbstractView {
-  constructor(userDataGame, dataGames) {
+  constructor(userDataStats) {
     super();
-    this._statUser = userDataGame.stats;
-    this._lives = userDataGame.lives;
-    this._dataGames = dataGames;
+    this._statUser = userDataStats;
+    this._lives = 3 - userDataStats.filter((value) => value === 0).length;
+    this._dataGames = [userDataStats];
     this._finalScores = countFinalScores(this._statUser, this._lives);
   }
 

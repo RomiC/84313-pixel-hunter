@@ -4,8 +4,6 @@ import RulesScreen from './screens/rules/rules.js';
 import StatsScreen from './screens/stat-games/stat-game.js';
 import gameScreen from './screens/levels/game-screen.js';
 
-import {initialGame} from './data/game-data.js';
-
 const controllerId = {
   WELCOME: ``,
   RULES: `rules`,
@@ -22,18 +20,16 @@ const routes = {
   [controllerId.STATS]: StatsScreen
 };
 
-const usersGames = [{
-  level: 10,
-  lives: 2,
-  time: 0,
-  stats: [1,1,1,2,1,0,1,1,2,1]
-}];
+const createHashData = (data) => {
+  return data.join(``);
+};
 
-const getHashState = (userId) => {
-  if (userId) {
-    const id = userId.replace(`user_id=`, ``);
-    return usersGames[id] || initialGame;
+const loadHashData = (data) => {
+  let game;
+  if (data) {
+    game = data.replace(`stats=`, ``).split(``).map((element) => parseInt(element, 10));
   }
+  return game;
 };
 
 export default class Application {
@@ -43,14 +39,14 @@ export default class Application {
       const [id, data] = hashValue.split(`?`);
       this.changeHash(id, data);
     };
-    window.onhashchange = changeHashHandler;
+    window.addEventListener(`hashchange`, () => changeHashHandler());
     changeHashHandler();
   }
 
   static changeHash(id, data) {
     const controller = routes[id];
-    if(controller) {
-      controller.init(getHashState(data));
+    if (controller) {
+      controller.init(loadHashData(data));
     }
   }
 
@@ -70,11 +66,7 @@ export default class Application {
     location.hash = controllerId.GAME;
   }
 
-  static showStats(stats) {
-    usersGames.push(stats);
-    console.log(usersGames);
-    console.log(stats);
-    const userId = usersGames.length - 1;
-    location.hash = `${controllerId.STATS}?user_id=${userId}`;
+  static showStats(data) {
+    location.hash = `${controllerId.STATS}?stats=${createHashData(data.stats)}`;
   }
 }
