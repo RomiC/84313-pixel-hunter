@@ -16,16 +16,16 @@ const gameTemplates = {
 };
 
 class GameScreen {
-  constructor(state = initialGame) {
-    this.model = new GameModel(state);
+  constructor() {
+    this.model = new GameModel(initialGame);
     this._state = this.model._state;
   }
 
   init(state = initialGame) {
     const levelData = questionsList[this._state.level];
     this.view = new gameTemplates[levelData.type](levelData);
-    this.view.showNextLevel = () => {
-      this.onChooseAnswer(this.view.isCorrectAnswer);
+    this.view.showNextLevel = (isCorrectAnswer) => {
+      this.onChooseAnswer(isCorrectAnswer);
     };
 
     this.model.update(state);
@@ -97,4 +97,4 @@ class GameScreen {
   }
 }
 
-export default (state) => new GameScreen(state);
+export default new GameScreen();

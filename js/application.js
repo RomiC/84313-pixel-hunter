@@ -18,8 +18,7 @@ export default class Application {
   }
 
   static showGame() {
-    const game = gameScreen();
-    game.init();
+    gameScreen.init();
   }
 
   static showStats(stats) {
