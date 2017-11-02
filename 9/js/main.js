@@ -135,6 +135,32 @@ class GreetingView extends AbstractView {
   }
 }
 
+const ANSWERS = {
+  RIGHT: 1,
+  FAST: 2,
+  SLOW: 3,
+  WRONG: 0
+};
+
+const ANSWER_SCORES = {
+  RIGHT: 100,
+  FAST: 50,
+  SLOW: -50,
+  LIVE: 50
+};
+
+const GAME = {
+  FAIL: -1,
+  AMOUNT_GAME_LEVELS: 10,
+  MAX_AMOUNT_LIVES: 3
+};
+
+const TIME = {
+  FOR_ANSWER: 30,
+  FAST_ANSWER_MAX: 10,
+  SLOW_ANSWER_MIN: 20
+};
+
 class HeaderView extends AbstractView {
   constructor(mode, dataGame) {
     super();
@@ -161,7 +187,7 @@ class HeaderView extends AbstractView {
       </div>
       <h1 class="game__timer">${this._data.time}</h1>
       <div class="game__lives">
-        ${new Array(3 - this._data.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
+        ${new Array(GAME.MAX_AMOUNT_LIVES - this._data.lives).fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
          ${new Array(this._data.lives).fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`).join(``)}
       </div>
      </header>`.trim();
@@ -285,33 +311,9 @@ class RulesScreen {
 
 var RulesScreen$1 = new RulesScreen();
 
-const ANSWERS = {
-  RIGHT: 1,
-  FAST: 2,
-  SLOW: 3,
-  WRONG: 0
-};
-
-const ANSWER_SCORES = {
-  RIGHT: 100,
-  FAST: 50,
-  SLOW: -50,
-  LIVE: 50
-};
-
-const FAIL_GAME = -1;
-
-const TIME = {
-  FOR_ANSWER: 30,
-  FAST_ANSWER_MAX: 10,
-  SLOW_ANSWER_MIN: 20
-};
-
-const amountAnswers = 10;
-
 const countFinalScores = (answers, lives) => {
-  if (answers.length < amountAnswers) {
-    return FAIL_GAME;
+  if (answers.length < GAME.AMOUNT_GAME_LEVELS) {
+    return GAME.FAIL;
   } else {
     let finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
@@ -432,7 +434,7 @@ class UserStatView extends AbstractView {
     return `<div class="stats">
     <ul class="stats">
       ${this._data.map((score) => this.resultLevel(score)).join(``)}
-      ${new Array(10 - this._data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
+      ${new Array(GAME.AMOUNT_GAME_LEVELS - this._data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
     </ul>
   </div>`.trim();
   }
@@ -483,11 +485,11 @@ class StatGamesView extends AbstractView {
   }
 
   get titleStat() {
-    return (this._finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
+    return (this._finalScores === GAME.FAIL) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
   }
 
   getResultGame(indexGame) {
-    if (this._finalScores !== FAIL_GAME) {
+    if (this._finalScores !== GAME.FAIL) {
       return `
       <table class="result__table">
           <tr>
@@ -594,8 +596,8 @@ class Level3ImgsView extends AbstractView {
 
     pictures.forEach((pic) => {
       pic.addEventListener(`click`, (ev) => {
-        this.isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
-        this.showNextLevel();
+        const isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
+        this.showNextLevel(isCorrectAnswer);
       });
     });
 
@@ -642,8 +644,8 @@ class Level1ImgView extends AbstractView {
 
     radioBtns.forEach((radioBtn) => {
       radioBtn.addEventListener(`change`, (ev) => {
-        this.isCorrectAnswer = ev.target.value === this._level.options[0].answer;
-        this.showNextLevel();
+        const isCorrectAnswer = ev.target.value === this._level.options[0].answer;
+        this.showNextLevel(isCorrectAnswer);
       });
     });
   }
@@ -702,8 +704,8 @@ class Level2ImgsView extends AbstractView {
         }
 
         if (q1 && q2) {
-          this.isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
-          this.showNextLevel();
+          const isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
+          this.showNextLevel(isCorrectAnswer);
         }
       });
     });
@@ -853,8 +855,8 @@ const gameTemplates = {
 };
 
 class GameScreen {
-  constructor(state = copy(initialGame)) {
-    this.model = new GameModel(state);
+  constructor() {
+    this.model = new GameModel(copy(initialGame));
     this._state = this.model._state;
     window.addEventListener(`hashchange`, () => this.stopTimer());
   }
@@ -863,8 +865,8 @@ class GameScreen {
     this._state = this.model.update(state);
     const levelData = questionsList[this._state.level];
     this.view = new gameTemplates[levelData.type](levelData);
-    this.view.showNextLevel = () => {
-      this.onChooseAnswer(this.view.isCorrectAnswer);
+    this.view.showNextLevel = (isCorrectAnswer) => {
+      this.onChooseAnswer(isCorrectAnswer);
     };
     this.showNextLevel();
   }
@@ -934,7 +936,7 @@ class GameScreen {
   }
 }
 
-var gameScreen = (state) => new GameScreen(state);
+var gameScreen = new GameScreen();
 
 const controllerId = {
   WELCOME: ``,
@@ -948,18 +950,20 @@ const routes = {
   [controllerId.WELCOME]: IntroScreen$1,
   [controllerId.GREETING]: GreetingScreen$1,
   [controllerId.RULES]: RulesScreen$1,
-  [controllerId.GAME]: gameScreen(),
+  [controllerId.GAME]: gameScreen,
   [controllerId.STATS]: StatsScreen
 };
 
-const createHashData = (data) => {
-  return data.join(``);
+const createUrlData = (data) => {
+  return `=${data.join(``)}:${Date.now()}`;
 };
 
 const loadHashData = (data) => {
   let game;
   if (data) {
-    game = data.replace(`stats=`, ``).split(``).map((element) => parseInt(element, 10));
+    const timestamp = data.indexOf(`:`);
+    const stats = data.replace(`stats=`, ``).slice(0, timestamp);
+    game = stats.split(``).map((element) => parseInt(element, 10));
   }
   return game;
 };
@@ -968,7 +972,7 @@ class Application {
   static init() {
     const changeHashHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
-      const [id, data] = hashValue.split(`?`);
+      const [id, data] = hashValue.split(`=`);
       this.changeHash(id, data);
     };
     window.addEventListener(`hashchange`, () => changeHashHandler());
@@ -999,7 +1003,7 @@ class Application {
   }
 
   static showStats(data) {
-    location.hash = `${controllerId.STATS}?stats=${createHashData(data.stats)}`;
+    location.hash = `${controllerId.STATS}${createUrlData(data.stats)}`;
   }
 }
 
