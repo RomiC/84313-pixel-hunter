@@ -21,7 +21,7 @@ const routes = {
 };
 
 const createUrlData = (data) => {
-  return `=${data.join(``)}:${new Date().getTime()}`;
+  return `=${data.join(``)}:${Date.now()}`;
 };
 
 const loadHashData = (data) => {
