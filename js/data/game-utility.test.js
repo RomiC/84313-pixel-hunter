@@ -1,26 +1,26 @@
 import assert from 'assert';
 import {countFinalScores, createTimer, resize} from './game-utility.js';
-import {FAIL_GAME} from './constants.js';
+import {GAME} from './constants.js';
 
 describe(`game data test`, () => {
   describe(`test function count finally scores`, () => {
-    it(`should return -1 when player didn't answer 10 question`, () => {
-      assert.equal(countFinalScores([1, 1, 1, 1, 1], 0), FAIL_GAME);
+    it(`should return -1 when player didn't answer ${GAME.AMOUNT_GAME_LEVELS} question`, () => {
+      assert.equal(countFinalScores([1, 1, 1, 1, 1], 0), GAME.FAIL);
     });
 
-    it(`should return 1150 when player answer 10 question(not fast, not slow), didn't fail`, () => {
+    it(`should return 1150 when player answer ${GAME.AMOUNT_GAME_LEVELS} question(not fast, not slow), didn't fail`, () => {
       assert.equal(countFinalScores([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 3), 1150);
     });
 
-    it(`should return 1150 when player answer 10 question(2 fast, 2 slow), didn't fail`, () => {
+    it(`should return 1150 when player answer ${GAME.AMOUNT_GAME_LEVELS} question(2 fast, 2 slow), didn't fail`, () => {
       assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 3), 1150);
     });
 
-    it(`should return 1100 when player answer 10 question(2 fast, 3 slow), didn't fail`, () => {
+    it(`should return 1100 when player answer ${GAME.AMOUNT_GAME_LEVELS} question(2 fast, 3 slow), didn't fail`, () => {
       assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 3, 3, 3], 3), 1100);
     });
 
-    it(`should return 1050 when player answer 10 question(2 fast, 2 slow), 2 fail`, () => {
+    it(`should return 1050 when player answer ${GAME.AMOUNT_GAME_LEVELS} question(2 fast, 2 slow), 2 fail`, () => {
       assert.equal(countFinalScores([1, 1, 1, 1, 2, 1, 2, 1, 3, 3], 1), 1050);
     });
   });

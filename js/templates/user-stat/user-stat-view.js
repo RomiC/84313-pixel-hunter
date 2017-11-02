@@ -1,4 +1,4 @@
-import {ANSWERS} from '../../data/constants.js';
+import {ANSWERS, GAME} from '../../data/constants.js';
 import AbstractView from '../../abstract-view.js';
 
 export default class UserStatView extends AbstractView {
@@ -11,7 +11,7 @@ export default class UserStatView extends AbstractView {
     return `<div class="stats">
     <ul class="stats">
       ${this._data.map((score) => this.resultLevel(score)).join(``)}
-      ${new Array(10 - this._data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
+      ${new Array(GAME.AMOUNT_GAME_LEVELS - this._data.length).fill(`<li class="stats__result stats__result--unknown"></li>`)}
     </ul>
   </div>`.trim();
   }

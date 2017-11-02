@@ -8,6 +8,7 @@ import {ANSWERS, TIME} from './../../data/constants.js';
 import App from '../../application.js';
 import GameModel from './../../data/game-model.js';
 import header from '../../templates/header/header.js';
+import {copy} from '../../data/game-utility.js';
 
 const gameTemplates = {
   TWO_PIC: Level2ImgsView,
@@ -17,18 +18,18 @@ const gameTemplates = {
 
 class GameScreen {
   constructor() {
-    this.model = new GameModel(initialGame);
+    this.model = new GameModel(copy(initialGame));
     this._state = this.model._state;
+    window.addEventListener(`hashchange`, () => this.stopTimer());
   }
 
-  init(state = initialGame) {
+  init(state = copy(initialGame)) {
+    this._state = this.model.update(state);
     const levelData = questionsList[this._state.level];
     this.view = new gameTemplates[levelData.type](levelData);
     this.view.showNextLevel = (isCorrectAnswer) => {
       this.onChooseAnswer(isCorrectAnswer);
     };
-
-    this.model.update(state);
     this.showNextLevel();
   }
 
