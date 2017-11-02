@@ -35,6 +35,12 @@ export const createTimer = (timeInSecond, msg = ``) => {
   return timer;
 };
 
+export const tick = (game) => {
+  const gameStat = copy(game);
+  gameStat.time = gameStat.time + 1;
+  return gameStat;
+};
+
 export const copy = (object) => {
   let newObj = Object.assign({}, object);
   for (const key in newObj) {
@@ -44,6 +50,30 @@ export const copy = (object) => {
   }
   return newObj;
 };
+
+
+export const nextLevel = (gameData) => {
+  const game = copy(gameData);
+  game.level++;
+  return game;
+};
+
+export const spendLives = (gameData) => {
+  const game = copy(gameData);
+  game.lives--;
+  if (game.lives < 0) {
+    throw new RangeError(`Can't set negative lives`);
+  }
+  return game;
+};
+
+
+export const setLastLevelStat = (gameData, answer) => {
+  const game = copy(gameData);
+  game.stats.push(answer);
+  return game;
+};
+
 
 export const resize = (frame, given) => {
   let pictureWidth = 0;

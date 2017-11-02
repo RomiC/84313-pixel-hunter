@@ -1,11 +1,22 @@
-import {initialGame} from '../../data/game-data.js';
-import nextLevel from '../../data/next-level.js';
 import RulesView from './rules-view.js';
+import changeTemplate from '../../change-template.js';
+import App from '../../application.js';
+import header from '../../templates/header/header.js';
 
-const rules = new RulesView();
-rules.showNextLevel = () => {
-  nextLevel(null, initialGame);
-};
+class RulesScreen {
+  init() {
+    this._screen = new RulesView();
+    this.bind();
 
-export default () => rules;
+    const headerScreen = header(`on`, this._state).init();
+    return changeTemplate(this._screen.element, headerScreen);
+  }
 
+  bind() {
+    this._screen.showNextLevel = () => {
+      App.showGame();
+    };
+  }
+}
+
+export default new RulesScreen();

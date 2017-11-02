@@ -30,8 +30,8 @@ export default class Level3ImgsView extends AbstractView {
 
     pictures.forEach((pic) => {
       pic.addEventListener(`click`, (ev) => {
-        this._isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
-        this.showNextLevel();
+        const isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
+        this.showNextLevel(isCorrectAnswer);
       });
     });
 

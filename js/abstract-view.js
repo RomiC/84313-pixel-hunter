@@ -10,7 +10,6 @@ export default class AbstractView {
   }
 
   bind() {
-    throw new Error(`method bind must be define for view`);
   }
 
   getMarkup() {

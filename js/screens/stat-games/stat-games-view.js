@@ -33,9 +33,6 @@ export default class StatGamesView extends AbstractView {
     return (this._finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
   }
 
-  bind() {
-  }
-
   getResultGame(indexGame) {
     if (this._finalScores !== FAIL_GAME) {
       return `

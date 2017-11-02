@@ -1,11 +1,24 @@
 import HeaderView from './header-view.js';
-import changeTemplate from '../../change-template.js';
-import greetingPage from '../../screens/greeting/greeting.js';
+import App from '../../application.js';
 
-export default (mode, dataGame) => {
-  const header = new HeaderView(mode, dataGame);
-  header.showGreetingPage = () => {
-    changeTemplate(greetingPage().element);
-  };
-  return header;
-};
+class Header {
+  constructor(mode, dataGame) {
+    this.mode = mode;
+    this.data = dataGame;
+  }
+
+  init() {
+    this.screen = new HeaderView(this.mode, this.data);
+    this.bind();
+
+    return this.screen.element;
+  }
+
+  bind() {
+    this.screen.showGreetingPage = () => {
+      App.showWelcome();
+    };
+  }
+}
+
+export default (mode, dataGame) => new Header(mode, dataGame);

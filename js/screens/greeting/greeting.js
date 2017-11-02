@@ -1,11 +1,22 @@
 import GreetingViews from './greeting-views.js';
 import changeTemplate from '../../change-template.js';
-import rulesPage from '../rules/rules.js';
+import App from '../../application.js';
+import header from '../../templates/header/header.js';
 
-const greeting = new GreetingViews();
-greeting.showNextPage = () => {
-  changeTemplate(rulesPage().element, `on`);
-};
+class GreetingScreen {
+  init() {
+    this._screen = new GreetingViews();
+    this.bind();
 
-export default () => greeting;
+    const headerScreen = header(`on`, this._state).init();
+    return changeTemplate(this._screen.element, headerScreen);
+  }
 
+  bind() {
+    this._screen.showNextPage = () => {
+      App.showRules();
+    };
+  }
+}
+
+export default new GreetingScreen();
