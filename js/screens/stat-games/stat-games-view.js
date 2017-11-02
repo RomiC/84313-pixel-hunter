@@ -1,6 +1,6 @@
 import AbstractView from '../../abstract-view.js';
 import {countFinalScores} from '../../data/game-utility.js';
-import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from '../../data/constants.js';
+import {ANSWERS, ANSWER_SCORES, GAME} from '../../data/constants.js';
 import userStat from '../../templates/user-stat/user-stat.js';
 
 
@@ -30,11 +30,11 @@ export default class StatGamesView extends AbstractView {
   }
 
   get titleStat() {
-    return (this._finalScores === FAIL_GAME) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
+    return (this._finalScores === GAME.FAIL) ? `<h1>Поражение!</h1>` : `<h1>Победа!</h1>`;
   }
 
   getResultGame(indexGame) {
-    if (this._finalScores !== FAIL_GAME) {
+    if (this._finalScores !== GAME.FAIL) {
       return `
       <table class="result__table">
           <tr>

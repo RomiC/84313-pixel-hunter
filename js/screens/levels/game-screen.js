@@ -17,8 +17,8 @@ const gameTemplates = {
 };
 
 class GameScreen {
-  constructor(state = copy(initialGame)) {
-    this.model = new GameModel(state);
+  constructor() {
+    this.model = new GameModel(copy(initialGame));
     this._state = this.model._state;
     window.addEventListener(`hashchange`, () => this.stopTimer());
   }
@@ -27,8 +27,8 @@ class GameScreen {
     this._state = this.model.update(state);
     const levelData = questionsList[this._state.level];
     this.view = new gameTemplates[levelData.type](levelData);
-    this.view.showNextLevel = () => {
-      this.onChooseAnswer(this.view.isCorrectAnswer);
+    this.view.showNextLevel = (isCorrectAnswer) => {
+      this.onChooseAnswer(isCorrectAnswer);
     };
     this.showNextLevel();
   }
@@ -98,4 +98,4 @@ class GameScreen {
   }
 }
 
-export default (state) => new GameScreen(state);
+export default new GameScreen();

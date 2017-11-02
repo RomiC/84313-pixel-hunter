@@ -39,8 +39,8 @@ export default class Level1ImgView extends AbstractView {
 
     radioBtns.forEach((radioBtn) => {
       radioBtn.addEventListener(`change`, (ev) => {
-        this.isCorrectAnswer = ev.target.value === this._level.options[0].answer;
-        this.showNextLevel();
+        const isCorrectAnswer = ev.target.value === this._level.options[0].answer;
+        this.showNextLevel(isCorrectAnswer);
       });
     });
   }

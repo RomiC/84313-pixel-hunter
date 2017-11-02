@@ -12,7 +12,11 @@ const ANSWER_SCORES = {
   LIVE: 50
 };
 
-const FAIL_GAME = -1;
+const GAME = {
+  FAIL: -1,
+  AMOUNT_GAME_LEVELS: 10,
+  MAX_AMOUNT_LIVES: 3
+};
 
 const TIME = {
   FOR_ANSWER: 30,
@@ -20,4 +24,4 @@ const TIME = {
   SLOW_ANSWER_MIN: 20
 };
 
-export {ANSWERS, ANSWER_SCORES, FAIL_GAME, TIME};
+export {ANSWERS, ANSWER_SCORES, GAME, TIME};

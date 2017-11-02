@@ -1,10 +1,8 @@
-import {ANSWERS, ANSWER_SCORES, FAIL_GAME} from './constants.js';
-
-const amountAnswers = 10;
+import {ANSWERS, ANSWER_SCORES, GAME} from './constants.js';
 
 export const countFinalScores = (answers, lives) => {
-  if (answers.length < amountAnswers) {
-    return FAIL_GAME;
+  if (answers.length < GAME.AMOUNT_GAME_LEVELS) {
+    return GAME.FAIL;
   } else {
     let finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
