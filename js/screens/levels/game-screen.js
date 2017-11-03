@@ -92,13 +92,20 @@ class GameScreen {
     const headerGame = header(`game`, state).init();
     this.headerContainer.innerHTML = ``;
     this.headerContainer.appendChild(headerGame);
+
+    const timer = this.headerContainer.querySelector(`.game__timer`);
+    if (this._state.time <= TIME.LAST_SECONDS) {
+      timer.classList.add(`flashing`);
+    } else {
+      timer.classList.remove(`flashing`);
+    }
   }
 
   tick() {
     this._state = this.model.tick();
     this.updateHeader(this._state);
     this.timer = setTimeout(() => this.tick(), 1000);
-    if (this._state.time === TIME.FOR_ANSWER) {
+    if (!this._state.time) {
       this.onChooseAnswer(false);
     }
   }

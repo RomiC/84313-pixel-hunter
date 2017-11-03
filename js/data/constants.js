@@ -21,7 +21,8 @@ const GAME = {
 const TIME = {
   FOR_ANSWER: 30,
   FAST_ANSWER_MAX: 10,
-  SLOW_ANSWER_MIN: 20
+  SLOW_ANSWER_MIN: 20,
+  LAST_SECONDS: 5
 };
 
 const initialGame = Object.freeze({
