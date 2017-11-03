@@ -3,6 +3,7 @@ import Level3ImgsView from './level-type-3-images-view.js';
 import Level1ImgView from './level-type-1-image-view.js';
 import Level2ImgsView from './level-type-2-images-view.js';
 import {initialGame} from './../../data/game-data.js';
+import {postData} from './../../data/game-load.js';
 import userStat from '../../templates/user-stat/user-stat.js';
 import {ANSWERS, TIME} from './../../data/constants.js';
 import App from '../../application.js';
@@ -118,22 +119,7 @@ class GameScreen {
     const body = {
       "stats": this._state.stats
     };
-
-    fetch(`https://es.dump.academy/pixel-hunter/stats/${this.model.userName}`, {
-      method: `post`,
-      headers: {
-        "Content-type": `application/json; charset=UTF-8`
-      },
-      body: JSON.stringify(body)
-    }).then((response) => {
-      if (response.ok) {
-        App.showStats(this.model.userName);
-      } else {
-        throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-      }
-    }).catch((err) => {
-      throw new Error(`Ошибка: ${err.message}`);
-    });
+    postData(`stats/${this.model.userName}`, body, () => App.showStats(this.model.userName));
   }
 }
 
