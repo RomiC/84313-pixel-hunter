@@ -46,9 +46,6 @@ export const nextLevel = (gameData) => {
 export const spendLives = (gameData) => {
   const game = copy(gameData);
   game.lives--;
-  if (game.lives < 0) {
-    throw new RangeError(`Can't set negative lives`);
-  }
   return game;
 };
 

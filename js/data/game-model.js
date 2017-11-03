@@ -1,5 +1,5 @@
 import {nextLevel, spendLives, setLastLevelStat, tick} from './game-utility.js';
-import {initialGame} from './game-data.js';
+import {initialGame} from './constants.js';
 import {getData} from './game-load.js';
 
 export default class GameModel {
