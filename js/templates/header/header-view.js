@@ -47,7 +47,9 @@ export default class HeaderView extends AbstractView {
   bind() {
     this._element.querySelector(`.back`).addEventListener(`click`, (event) => {
       event.preventDefault();
-      this.showGreetingPage();
+      if (!this._element.querySelector(`.game__timer`) || confirm(`Вы уверены? Ваша игра не будет сохранена.`)) {
+        this.showGreetingPage();
+      }
     });
   }
 
