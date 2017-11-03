@@ -2,35 +2,51 @@ import changeTemplate from '../../change-template.js';
 import Level3ImgsView from './level-type-3-images-view.js';
 import Level1ImgView from './level-type-1-image-view.js';
 import Level2ImgsView from './level-type-2-images-view.js';
-import {questionsList, initialGame} from './../../data/game-data.js';
+import {initialGame} from './../../data/game-data.js';
 import userStat from '../../templates/user-stat/user-stat.js';
 import {ANSWERS, TIME} from './../../data/constants.js';
 import App from '../../application.js';
 import GameModel from './../../data/game-model.js';
 import header from '../../templates/header/header.js';
-import {copy} from '../../data/game-utility.js';
 
 const gameTemplates = {
-  TWO_PIC: Level2ImgsView,
-  ONE_PIC: Level1ImgView,
-  ONE_PAINT: Level3ImgsView
+  "two-of-two": Level2ImgsView,
+  "tinder-like": Level1ImgView,
+  "one-of-three": Level3ImgsView
 };
 
 class GameScreen {
   constructor() {
-    this.model = new GameModel(copy(initialGame));
+    this.model = new GameModel(initialGame);
     this._state = this.model._state;
     window.addEventListener(`hashchange`, () => this.stopTimer());
   }
 
-  init(state = copy(initialGame)) {
-    this._state = this.model.update(state);
-    const levelData = questionsList[this._state.level];
+  loadLevelDataInView(levelData) {
     this.view = new gameTemplates[levelData.type](levelData);
     this.view.showNextLevel = (isCorrectAnswer) => {
       this.onChooseAnswer(isCorrectAnswer);
     };
     this.showNextLevel();
+  }
+
+  init(state = initialGame) {
+    this._state = this.model.update(state);
+
+    let levelData = this.model.getLevelData();
+    if (!levelData) {
+      const loadLevelDataInView = (levels) => {
+        this.model.updateQuestionsList(levels);
+        levelData = this.model.getLevelData();
+        this.loadLevelDataInView(levelData);
+      };
+
+      this.model.loadQuestionsData().then((levels) => {
+        loadLevelDataInView(levels);
+      });
+    } else {
+      this.loadLevelDataInView(levelData);
+    }
   }
 
   showNextLevel() {
@@ -80,17 +96,21 @@ class GameScreen {
   tick() {
     this._state = this.model.tick();
     this.updateHeader(this._state);
+    this.timer = setTimeout(() => this.tick(), 1000);
     if (this._state.time === TIME.FOR_ANSWER) {
       this.onChooseAnswer(false);
     }
-    this.timer = setTimeout(() => this.tick(), 1000);
   }
 
   stopTimer() {
-    const time = this._state.time;
-    this.model.stopTimer();
-    clearTimeout(this.timer);
-    return time;
+    if (this.timer) {
+      const time = this._state.time;
+      this.model.stopTimer();
+      clearTimeout(this.timer);
+      return time;
+    }
+
+    return null;
   }
 
   lose() {

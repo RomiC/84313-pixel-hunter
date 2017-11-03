@@ -5,15 +5,21 @@ export default class Level3ImgsView extends AbstractView {
   constructor(levelData) {
     super();
     this._level = levelData;
+    const amountTypePainting = levelData.answers.filter((answer) => answer.type === `painting`).length;
+    this._level.typeAnswer = (amountTypePainting === 1) ? `painting` : `photo`;
+  }
+
+  get titleLevel() {
+    return (this._level.typeAnswer === `painting`) ? `Найдите рисунок среди изображений` : `Найдите фото среди изображений`;
   }
 
   get template() {
     return `
     <div class="game">
-      <p class="game__task">Найдите рисунок среди изображений</p>
+      <p class="game__task">${ this.titleLevel }</p>
       <form class="game__content  game__content--triple">
-        ${[...this._level.options].map((option) => `<div class="game__option">
-            <img src="${option}" alt="Option 1" width="304" height="455">
+        ${this._level.answers.map((option) => `<div class="game__option">
+            <img src="${option.image.url}" alt="${option.type}" width="${option.image.width}" height="${option.image.height}">
         </div>`).join(``)}
       </form>
     </div>`.trim();
@@ -30,7 +36,7 @@ export default class Level3ImgsView extends AbstractView {
 
     pictures.forEach((pic) => {
       pic.addEventListener(`click`, (ev) => {
-        const isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
+        const isCorrectAnswer = ev.target.lastElementChild.alt === this._level.typeAnswer;
         this.showNextLevel(isCorrectAnswer);
       });
     });

@@ -14,13 +14,13 @@ export default class Level1ImgView extends AbstractView {
       <p class="game__task">Угадай, фото или рисунок?</p>
       <form class="game__content  game__content--wide">
         <div class="game__option">
-          <img src="${this._level.options[0].question}" alt="Option 1" width="705" height="455">
+          <img src="${this._level.answers[0].image.url}" alt="Option 1" width="${this._level.answers[0].image.width}" height="${this._level.answers[0].image.height}">
           <label class="game__answer  game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer  game__answer--wide  game__answer--paint">
-            <input name="question1" type="radio" value="paint">
+            <input name="question1" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>
@@ -39,7 +39,7 @@ export default class Level1ImgView extends AbstractView {
 
     radioBtns.forEach((radioBtn) => {
       radioBtn.addEventListener(`change`, (ev) => {
-        const isCorrectAnswer = ev.target.value === this._level.options[0].answer;
+        const isCorrectAnswer = ev.target.value === this._level.answers[0].type;
         this.showNextLevel(isCorrectAnswer);
       });
     });

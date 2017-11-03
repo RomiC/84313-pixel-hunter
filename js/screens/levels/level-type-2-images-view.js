@@ -1,10 +1,6 @@
 import {resizeImages} from '../../data/game-utility.js';
 import AbstractView from '../../abstract-view.js';
 
-const checkQuestion = (options, a1, a2) => {
-  return options[0].answer === a1 && options[1].answer === a2;
-};
-
 export default class Level2ImgsView extends AbstractView {
   constructor(levelData) {
     super();
@@ -16,19 +12,23 @@ export default class Level2ImgsView extends AbstractView {
     <div class="game">
       <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
       <form class="game__content">
-        ${this._level.options.map((option, i) => `<div class="game__option">
-          <img src="${option.question}" alt="Option ${i + 1}" width="468" height="458">
+        ${this._level.answers.map((option, i) => `<div class="game__option">
+          <img src="${option.image.url}" alt="Option ${i + 1}" width="${option.image.width}" height="${option.image.height}">
           <label class="game__answer game__answer--photo">
             <input name="question${i + 1}" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer game__answer--paint">
-            <input name="question${i + 1}" type="radio" value="paint">
+            <input name="question${i + 1}" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>`).join(``)}
       </form>
     </div>`.trim();
+  }
+
+  checkQuestion(a1, a2) {
+    return this._level.answers[0].type === a1 && this._level.answers[1].type === a2;
   }
 
   bind() {
@@ -51,7 +51,7 @@ export default class Level2ImgsView extends AbstractView {
         }
 
         if (q1 && q2) {
-          const isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
+          const isCorrectAnswer = this.checkQuestion(q1, q2);
           this.showNextLevel(isCorrectAnswer);
         }
       });

@@ -20,19 +20,6 @@ export const countFinalScores = (answers, lives) => {
   }
 };
 
-export const createTimer = (timeInSecond, msg = ``) => {
-  const timer = {
-    time: timeInSecond > 0 ? timeInSecond : 0,
-    tick() {
-      const value = timer.time - 1;
-      const msgTick = (value === 0) ? `Timer stopped` : ``;
-      return createTimer(value > 0 ? value : 0, msgTick);
-    },
-    msg
-  };
-  return timer;
-};
-
 export const tick = (game) => {
   const gameStat = copy(game);
   gameStat.time = gameStat.time + 1;
