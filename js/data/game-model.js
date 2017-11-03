@@ -1,6 +1,7 @@
 import {nextLevel, spendLives, setLastLevelStat, tick} from './game-utility.js';
 import {initialGame} from './constants.js';
 import {getData} from './game-load.js';
+import {GAME} from './constants.js';
 
 export default class GameModel {
   constructor(state = initialGame) {
@@ -28,12 +29,12 @@ export default class GameModel {
   }
 
   stopTimer() {
-    this._state.time = 0;
+    this._state.time = initialGame.time;
     this.update(this._state);
   }
 
   userInGame() {
-    return this._state.lives !== -1 && this._state.level < 10;
+    return this._state.lives !== -1 && this._state.level < GAME.AMOUNT_GAME_LEVELS;
   }
 
   update(newState) {

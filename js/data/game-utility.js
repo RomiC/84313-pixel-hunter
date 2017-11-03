@@ -22,7 +22,7 @@ export const countFinalScores = (answers, lives) => {
 
 export const tick = (game) => {
   const gameStat = copy(game);
-  gameStat.time = gameStat.time + 1;
+  gameStat.time = gameStat.time - 1;
   return gameStat;
 };
 

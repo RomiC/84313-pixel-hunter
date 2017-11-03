@@ -62,7 +62,7 @@ class GameScreen {
   }
 
   onChooseAnswer(isCorrectAnswer) {
-    const spendTimeOnAnswer = this.stopTimer();
+    const spendTimeOnAnswer = TIME.FOR_ANSWER - this.stopTimer();
     if (isCorrectAnswer) {
       this.model.nextLevel();
 
