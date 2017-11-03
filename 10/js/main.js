@@ -569,10 +569,12 @@ class Level3ImgsView extends AbstractView {
   constructor(levelData) {
     super();
     this._level = levelData;
+    const amountTypePainting = levelData.answers.filter((answer) => answer.type === `painting`).length;
+    this._level.typeAnswer = (amountTypePainting === 1) ? `painting` : `photo`;
   }
 
   get titleLevel() {
-    return (this._level.typeAnswer === `paint`) ? `Найдите рисунок среди изображений` : `Найдите фото среди изображений`;
+    return (this._level.typeAnswer === `painting`) ? `Найдите рисунок среди изображений` : `Найдите фото среди изображений`;
   }
 
   get template() {
@@ -580,8 +582,8 @@ class Level3ImgsView extends AbstractView {
     <div class="game">
       <p class="game__task">${ this.titleLevel }</p>
       <form class="game__content  game__content--triple">
-        ${[...this._level.options].map((option) => `<div class="game__option">
-            <img src="${option}" alt="Option 1" width="304" height="455">
+        ${this._level.answers.map((option) => `<div class="game__option">
+            <img src="${option.image.url}" alt="${option.type}" width="${option.image.width}" height="${option.image.height}">
         </div>`).join(``)}
       </form>
     </div>`.trim();
@@ -598,7 +600,7 @@ class Level3ImgsView extends AbstractView {
 
     pictures.forEach((pic) => {
       pic.addEventListener(`click`, (ev) => {
-        const isCorrectAnswer = ev.target.lastElementChild.src === this._level.answer;
+        const isCorrectAnswer = ev.target.lastElementChild.alt === this._level.typeAnswer;
         this.showNextLevel(isCorrectAnswer);
       });
     });
@@ -621,13 +623,13 @@ class Level1ImgView extends AbstractView {
       <p class="game__task">Угадай, фото или рисунок?</p>
       <form class="game__content  game__content--wide">
         <div class="game__option">
-          <img src="${this._level.options[0].question}" alt="Option 1" width="705" height="455">
+          <img src="${this._level.answers[0].image.url}" alt="Option 1" width="${this._level.answers[0].image.width}" height="${this._level.answers[0].image.height}">
           <label class="game__answer  game__answer--photo">
             <input name="question1" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer  game__answer--wide  game__answer--paint">
-            <input name="question1" type="radio" value="paint">
+            <input name="question1" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>
@@ -646,7 +648,7 @@ class Level1ImgView extends AbstractView {
 
     radioBtns.forEach((radioBtn) => {
       radioBtn.addEventListener(`change`, (ev) => {
-        const isCorrectAnswer = ev.target.value === this._level.options[0].answer;
+        const isCorrectAnswer = ev.target.value === this._level.answers[0].type;
         this.showNextLevel(isCorrectAnswer);
       });
     });
@@ -655,10 +657,6 @@ class Level1ImgView extends AbstractView {
   showNextLevel() {
   }
 }
-
-const checkQuestion = (options, a1, a2) => {
-  return options[0].answer === a1 && options[1].answer === a2;
-};
 
 class Level2ImgsView extends AbstractView {
   constructor(levelData) {
@@ -671,19 +669,23 @@ class Level2ImgsView extends AbstractView {
     <div class="game">
       <p class="game__task">Угадайте для каждого изображения фото или рисунок?</p>
       <form class="game__content">
-        ${this._level.options.map((option, i) => `<div class="game__option">
-          <img src="${option.question}" alt="Option ${i + 1}" width="468" height="458">
+        ${this._level.answers.map((option, i) => `<div class="game__option">
+          <img src="${option.image.url}" alt="Option ${i + 1}" width="${option.image.width}" height="${option.image.height}">
           <label class="game__answer game__answer--photo">
             <input name="question${i + 1}" type="radio" value="photo">
             <span>Фото</span>
           </label>
           <label class="game__answer game__answer--paint">
-            <input name="question${i + 1}" type="radio" value="paint">
+            <input name="question${i + 1}" type="radio" value="painting">
             <span>Рисунок</span>
           </label>
         </div>`).join(``)}
       </form>
     </div>`.trim();
+  }
+
+  checkQuestion(a1, a2) {
+    return this._level.answers[0].type === a1 && this._level.answers[1].type === a2;
   }
 
   bind() {
@@ -706,7 +708,7 @@ class Level2ImgsView extends AbstractView {
         }
 
         if (q1 && q2) {
-          const isCorrectAnswer = checkQuestion(this._level.options, q1, q2);
+          const isCorrectAnswer = this.checkQuestion(q1, q2);
           this.showNextLevel(isCorrectAnswer);
         }
       });
@@ -725,54 +727,6 @@ const initialGame = Object.freeze({
   stats: []
 });
 
-const typeQuestionAdapt = {
-  'two-of-two': `TWO_PIC`,
-  'tinder-like': `ONE_PIC`,
-  'one-of-three': `ONE_ANSWER`
-};
-
-const typeAnswerAdapt = {
-  painting: `paint`,
-  photo: `photo`
-};
-
-const adapterQuestions = (questions) => {
-  let adapted = {};
-
-  Object.keys(questions).forEach((it, i) => {
-    const level = questions[it];
-    const typeOfLevel = typeQuestionAdapt[level.type];
-
-    let question = {};
-    question.type = typeOfLevel;
-
-    if (typeOfLevel === typeQuestionAdapt[`two-of-two`] || typeOfLevel === typeQuestionAdapt[`tinder-like`]) {
-      question.options = [];
-      level.answers.forEach((answer) => {
-        question.options.push({
-          question: answer.image.url,
-          answer: typeAnswerAdapt[answer.type]
-        });
-      });
-    } else {
-      question.options = new Set();
-      const amountTypePainting = level.answers.filter((answer) => answer.type === `painting`).length;
-      const typeWinAnswer = (amountTypePainting === 1) ? `painting` : `photo`;
-      level.answers.forEach((answer) => {
-        question.options.add(answer.image.url);
-        if (answer.type === typeWinAnswer) {
-          question.answer = answer.image.url;
-          question.typeAnswer = typeAnswerAdapt[typeWinAnswer];
-        }
-      });
-    }
-
-    adapted[i] = question;
-  });
-
-  return adapted;
-};
-
 const uploadGameQuestions = () => {
   return fetch(`https://es.dump.academy/pixel-hunter/questions`, {
     method: `get`
@@ -781,7 +735,7 @@ const uploadGameQuestions = () => {
       return response.json();
     }
     throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-  }).then((data) => adapterQuestions(data)).catch((err) => {
+  }).catch((err) => {
     throw new Error(`Ошибка: ${err.message}`);
   });
 };
@@ -836,9 +790,9 @@ class GameModel {
 }
 
 const gameTemplates = {
-  TWO_PIC: Level2ImgsView,
-  ONE_PIC: Level1ImgView,
-  ONE_ANSWER: Level3ImgsView
+  "two-of-two": Level2ImgsView,
+  "tinder-like": Level1ImgView,
+  "one-of-three": Level3ImgsView
 };
 
 class GameScreen {
