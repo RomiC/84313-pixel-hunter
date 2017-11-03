@@ -12,13 +12,19 @@ const getDetailScores = (dataGame, typeAnswer, typeAnswerScore) => {
   return getAmountTypeAnswer(dataGame, typeAnswer) * typeAnswerScore;
 };
 
+const getDetailCorrectScores = (dataGame) => {
+  return dataGame.filter((score) => {
+    return score === ANSWERS.FAST || score === ANSWERS.SLOW || score === ANSWERS.RIGHT;
+  }).length * ANSWER_SCORES.RIGHT;
+};
+
 export default class StatGamesView extends AbstractView {
   constructor(userDataStats) {
     super();
-    this._statUser = userDataStats;
-    this._lives = 3 - userDataStats.filter((value) => value === 0).length;
-    this._dataGames = [userDataStats];
-    this._finalScores = countFinalScores(this._statUser, this._lives);
+    this._dataGames = userDataStats.reverse();
+    this._statLastGame = this._dataGames[0].stats;
+    this._lives = GAME.MAX_AMOUNT_LIVES - userDataStats.filter((value) => value === 0).length;
+    this._finalScores = countFinalScores(this._statLastGame, this._lives);
   }
 
   get template() {
@@ -34,29 +40,32 @@ export default class StatGamesView extends AbstractView {
   }
 
   getResultGame(indexGame) {
-    if (this._finalScores !== GAME.FAIL) {
+    const statUser = this._dataGames[indexGame - 1].stats;
+    const finalScores = countFinalScores(statUser, this._lives);
+
+    if (finalScores !== GAME.FAIL) {
       return `
       <table class="result__table">
           <tr>
             <td class="result__number">${indexGame}.</td>
             <td colspan="2">
-              ${userStat(this._statUser).template}
+              ${userStat(statUser).template}
             </td>
             <td class="result__points">×&nbsp;${ANSWER_SCORES.RIGHT}</td>
             <td class="result__total">
-              ${getDetailScores(this._statUser, ANSWERS.RIGHT, ANSWER_SCORES.RIGHT)}
+              ${getDetailCorrectScores(statUser)}
             </td>
           </tr>
           <tr>
             <td></td>
             <td class="result__extra">Бонус за скорость:</td>
             <td class="result__extra">
-              ${getAmountTypeAnswer(this._statUser, ANSWERS.FAST)}&nbsp;
+              ${getAmountTypeAnswer(statUser, ANSWERS.FAST)}&nbsp;
               <span class="stats__result stats__result--fast"></span>
             </td>
             <td class="result__points">×&nbsp;${ANSWER_SCORES.FAST}</td>
             <td class="result__total">
-              ${getDetailScores(this._statUser, ANSWERS.FAST, ANSWER_SCORES.FAST)}
+              ${getDetailScores(statUser, ANSWERS.FAST, ANSWER_SCORES.FAST)}
             </td>
           </tr>
           <tr>
@@ -70,17 +79,17 @@ export default class StatGamesView extends AbstractView {
             <td></td>
             <td class="result__extra">Штраф за медлительность:</td>
             <td class="result__extra">
-              ${getAmountTypeAnswer(this._statUser, ANSWERS.SLOW)}&nbsp;
+              ${getAmountTypeAnswer(statUser, ANSWERS.SLOW)}&nbsp;
               <span class="stats__result stats__result--slow"></span>
             </td>
             <td class="result__points">×&nbsp;${ANSWER_SCORES.SLOW}</td>
             <td class="result__total">
-              ${getDetailScores(this._statUser, ANSWERS.SLOW, ANSWER_SCORES.SLOW)}
+              ${getDetailScores(statUser, ANSWERS.SLOW, ANSWER_SCORES.SLOW)}
             </td>
           </tr>
           <tr>
             <td colspan="5" class="result__total  result__total--final">
-              ${this._finalScores}
+              ${finalScores}
             </td>
           </tr>
         </table>`;
@@ -91,7 +100,7 @@ export default class StatGamesView extends AbstractView {
       <tr>
         <td class="result__number">${indexGame}.</td>
           <td colspan="2">
-            ${userStat(this._statUser).template}
+            ${userStat(statUser).template}
           </td>
         <td class="result__total"></td>
         <td class="result__total  result__total--final">fail</td>

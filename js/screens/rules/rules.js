@@ -13,8 +13,8 @@ class RulesScreen {
   }
 
   bind() {
-    this._screen.showNextLevel = () => {
-      App.showGame();
+    this._screen.showNextLevel = (userName) => {
+      App.showGame(userName);
     };
   }
 }

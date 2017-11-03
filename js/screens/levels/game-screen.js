@@ -30,7 +30,8 @@ class GameScreen {
     this.showNextLevel();
   }
 
-  init(state = initialGame) {
+  init(userName, state = initialGame) {
+    this.model.userName = userName;
     this._state = this.model.update(state);
 
     let levelData = this.model.getLevelData();
@@ -81,9 +82,9 @@ class GameScreen {
 
     this._state = this.model._state;
     if (this.model.userInGame()) {
-      this.init(this._state);
+      this.init(this.model.userName, this._state);
     } else {
-      this.lose();
+      this.gameOver();
     }
   }
 
@@ -113,8 +114,26 @@ class GameScreen {
     return null;
   }
 
-  lose() {
-    App.showStats(this._state);
+  gameOver() {
+    const body = {
+      "stats": this._state.stats
+    };
+
+    fetch(`https://es.dump.academy/pixel-hunter/stats/${this.model.userName}`, {
+      method: `post`,
+      headers: {
+        "Content-type": `application/json; charset=UTF-8`
+      },
+      body: JSON.stringify(body)
+    }).then((response) => {
+      if (response.ok) {
+        App.showStats(this.model.userName);
+      } else {
+        throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+      }
+    }).catch((err) => {
+      throw new Error(`Ошибка: ${err.message}`);
+    });
   }
 }
 
