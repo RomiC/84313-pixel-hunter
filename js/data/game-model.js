@@ -1,6 +1,18 @@
 import {nextLevel, spendLives, setLastLevelStat, tick} from './game-utility.js';
 import {initialGame} from './game-data.js';
-import {uploadGameQuestions} from './game-load-data.js';
+
+const uploadGameQuestions = () => {
+  return fetch(`https://es.dump.academy/pixel-hunter/questions`, {
+    method: `get`
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+  }).catch((err) => {
+    throw new Error(`Ошибка: ${err.message}`);
+  });
+};
 
 export default class GameModel {
   constructor(state = initialGame) {

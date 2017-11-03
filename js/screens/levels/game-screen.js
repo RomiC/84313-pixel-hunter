@@ -10,9 +10,9 @@ import GameModel from './../../data/game-model.js';
 import header from '../../templates/header/header.js';
 
 const gameTemplates = {
-  TWO_PIC: Level2ImgsView,
-  ONE_PIC: Level1ImgView,
-  ONE_ANSWER: Level3ImgsView
+  "two-of-two": Level2ImgsView,
+  "tinder-like": Level1ImgView,
+  "one-of-three": Level3ImgsView
 };
 
 class GameScreen {
