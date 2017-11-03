@@ -7,10 +7,14 @@ export default class Level3ImgsView extends AbstractView {
     this._level = levelData;
   }
 
+  get titleLevel() {
+    return (this._level.typeAnswer === `paint`) ? `Найдите рисунок среди изображений` : `Найдите фото среди изображений`;
+  }
+
   get template() {
     return `
     <div class="game">
-      <p class="game__task">Найдите рисунок среди изображений</p>
+      <p class="game__task">${ this.titleLevel }</p>
       <form class="game__content  game__content--triple">
         ${[...this._level.options].map((option) => `<div class="game__option">
             <img src="${option}" alt="Option 1" width="304" height="455">
