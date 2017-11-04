@@ -15,6 +15,15 @@
   top: 25px;
   left: 50%;
   transform: translateX(-50%);
+
+  @keyframes flashing {
+    from {opacity: 1}
+    to {opacity: 0}
+  }
+
+  &.flashing {
+    animation: flashing 0.6s infinite ease-in-out;
+  }
 }
 
 .game__lives {

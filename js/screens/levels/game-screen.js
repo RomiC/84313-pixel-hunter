@@ -2,9 +2,9 @@ import changeTemplate from '../../change-template.js';
 import Level3ImgsView from './level-type-3-images-view.js';
 import Level1ImgView from './level-type-1-image-view.js';
 import Level2ImgsView from './level-type-2-images-view.js';
-import {initialGame} from './../../data/game-data.js';
+import {postData} from './../../data/game-load.js';
 import userStat from '../../templates/user-stat/user-stat.js';
-import {ANSWERS, TIME} from './../../data/constants.js';
+import {ANSWERS, TIME, initialGame} from './../../data/constants.js';
 import App from '../../application.js';
 import GameModel from './../../data/game-model.js';
 import header from '../../templates/header/header.js';
@@ -30,7 +30,8 @@ class GameScreen {
     this.showNextLevel();
   }
 
-  init(state = initialGame) {
+  init(userName, state = initialGame) {
+    this.model.userName = userName;
     this._state = this.model.update(state);
 
     let levelData = this.model.getLevelData();
@@ -61,7 +62,7 @@ class GameScreen {
   }
 
   onChooseAnswer(isCorrectAnswer) {
-    const spendTimeOnAnswer = this.stopTimer();
+    const spendTimeOnAnswer = TIME.FOR_ANSWER - this.stopTimer();
     if (isCorrectAnswer) {
       this.model.nextLevel();
 
@@ -81,9 +82,9 @@ class GameScreen {
 
     this._state = this.model._state;
     if (this.model.userInGame()) {
-      this.init(this._state);
+      this.init(this.model.userName, this._state);
     } else {
-      this.lose();
+      this.gameOver();
     }
   }
 
@@ -91,13 +92,20 @@ class GameScreen {
     const headerGame = header(`game`, state).init();
     this.headerContainer.innerHTML = ``;
     this.headerContainer.appendChild(headerGame);
+
+    const timer = this.headerContainer.querySelector(`.game__timer`);
+    if (this._state.time <= TIME.LAST_SECONDS) {
+      timer.classList.add(`flashing`);
+    } else {
+      timer.classList.remove(`flashing`);
+    }
   }
 
   tick() {
     this._state = this.model.tick();
     this.updateHeader(this._state);
     this.timer = setTimeout(() => this.tick(), 1000);
-    if (this._state.time === TIME.FOR_ANSWER) {
+    if (!this._state.time) {
       this.onChooseAnswer(false);
     }
   }
@@ -113,8 +121,11 @@ class GameScreen {
     return null;
   }
 
-  lose() {
-    App.showStats(this._state);
+  gameOver() {
+    const body = {
+      "stats": this._state.stats
+    };
+    postData(`stats/${this.model.userName}`, body, () => App.showStats(this.model.userName));
   }
 }
 

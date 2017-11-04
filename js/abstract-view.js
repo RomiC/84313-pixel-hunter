@@ -1,4 +1,4 @@
-import getElementFromTemplate from './create-DOM.js';
+import getElementFromTemplate from './create-dom.js';
 
 export default class AbstractView {
   get template() {

@@ -1,18 +1,7 @@
 import {nextLevel, spendLives, setLastLevelStat, tick} from './game-utility.js';
-import {initialGame} from './game-data.js';
-
-const uploadGameQuestions = () => {
-  return fetch(`https://es.dump.academy/pixel-hunter/questions`, {
-    method: `get`
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
-  }).catch((err) => {
-    throw new Error(`Ошибка: ${err.message}`);
-  });
-};
+import {initialGame} from './constants.js';
+import {getData} from './game-load.js';
+import {GAME} from './constants.js';
 
 export default class GameModel {
   constructor(state = initialGame) {
@@ -32,20 +21,20 @@ export default class GameModel {
   }
 
   getLevelData() {
-    return this.questionsList && this.questionsList[this._state.level];
+    return this.questions && this.questions[this._state.level];
   }
 
   loadQuestionsData() {
-    return uploadGameQuestions();
+    return getData(`questions`);
   }
 
   stopTimer() {
-    this._state.time = 0;
+    this._state.time = initialGame.time;
     this.update(this._state);
   }
 
   userInGame() {
-    return this._state.lives && this._state.level < 10;
+    return this._state.lives !== -1 && this._state.level < GAME.AMOUNT_GAME_LEVELS;
   }
 
   update(newState) {
@@ -54,8 +43,8 @@ export default class GameModel {
   }
 
   updateQuestionsList(levels) {
-    this.questionsList = levels;
-    return this.questionsList;
+    this.questions = levels;
+    return this.questions;
   }
 
   tick(time) {

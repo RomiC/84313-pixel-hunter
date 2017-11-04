@@ -20,25 +20,11 @@ const routes = {
   [controllerId.STATS]: StatsScreen
 };
 
-const createUrlData = (data) => {
-  return `=${data.join(``)}:${Date.now()}`;
-};
-
-const loadHashData = (data) => {
-  let game;
-  if (data) {
-    const timestamp = data.indexOf(`:`);
-    const stats = data.replace(`stats=`, ``).slice(0, timestamp);
-    game = stats.split(``).map((element) => parseInt(element, 10));
-  }
-  return game;
-};
-
 export default class Application {
   static init() {
     const changeHashHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
-      const [id, data] = hashValue.split(`=`);
+      const [id, data] = hashValue.split(`:`);
       this.changeHash(id, data);
     };
     window.addEventListener(`hashchange`, () => changeHashHandler());
@@ -48,7 +34,7 @@ export default class Application {
   static changeHash(id, data) {
     const controller = routes[id];
     if (controller) {
-      controller.init(loadHashData(data));
+      controller.init(data);
     }
   }
 
@@ -64,11 +50,11 @@ export default class Application {
     location.hash = controllerId.RULES;
   }
 
-  static showGame() {
-    location.hash = controllerId.GAME;
+  static showGame(userName) {
+    location.hash = `${controllerId.GAME}:${userName}`;
   }
 
-  static showStats(data) {
-    location.hash = `${controllerId.STATS}${createUrlData(data.stats)}`;
+  static showStats(userName) {
+    location.hash = `${controllerId.STATS}:${userName}`;
   }
 }

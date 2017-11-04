@@ -30,7 +30,7 @@ export default class RulesView extends AbstractView {
 
     rulesBtn.addEventListener(`click`, (event) => {
       event.preventDefault();
-      this.showNextLevel();
+      this.showNextLevel(rulesInput.value);
     });
   }
 

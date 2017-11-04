@@ -21,7 +21,15 @@ const GAME = {
 const TIME = {
   FOR_ANSWER: 30,
   FAST_ANSWER_MAX: 10,
-  SLOW_ANSWER_MIN: 20
+  SLOW_ANSWER_MIN: 20,
+  LAST_SECONDS: 5
 };
 
-export {ANSWERS, ANSWER_SCORES, GAME, TIME};
+const initialGame = Object.freeze({
+  level: 0,
+  lives: 3,
+  time: 30,
+  stats: []
+});
+
+export {ANSWERS, ANSWER_SCORES, GAME, TIME, initialGame};
