@@ -16,7 +16,7 @@ class Header {
 
   bind() {
     this.screen.showGreetingPage = () => {
-      App.showWelcome();
+      App.showRules();
     };
   }
 }
