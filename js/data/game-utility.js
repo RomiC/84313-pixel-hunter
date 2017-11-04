@@ -4,7 +4,7 @@ export const countFinalScores = (answers, lives) => {
   if (answers.length < GAME.AMOUNT_GAME_LEVELS) {
     return GAME.FAIL;
   } else {
-    let finallyScores = answers.reduce((sum, answer) => {
+    const finallyScores = answers.reduce((sum, answer) => {
       switch (answer) {
         case ANSWERS.RIGHT:
           return sum + ANSWER_SCORES.RIGHT;
@@ -26,8 +26,8 @@ export const tick = (game) => {
   return gameStat;
 };
 
-export const copy = (object) => {
-  let newObj = Object.assign({}, object);
+const copy = (object) => {
+  const newObj = Object.assign({}, object);
   for (const key in newObj) {
     if (newObj[key] instanceof Array) {
       newObj[key] = newObj[key].slice();
@@ -35,7 +35,6 @@ export const copy = (object) => {
   }
   return newObj;
 };
-
 
 export const nextLevel = (gameData) => {
   const game = copy(gameData);

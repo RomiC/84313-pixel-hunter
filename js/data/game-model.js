@@ -21,7 +21,7 @@ export default class GameModel {
   }
 
   getLevelData() {
-    return this.questionsList && this.questionsList[this._state.level];
+    return this.questions && this.questions[this._state.level];
   }
 
   loadQuestionsData() {
@@ -43,8 +43,8 @@ export default class GameModel {
   }
 
   updateQuestionsList(levels) {
-    this.questionsList = levels;
-    return this.questionsList;
+    this.questions = levels;
+    return this.questions;
   }
 
   tick(time) {
