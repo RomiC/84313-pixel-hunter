@@ -17,8 +17,6 @@ export const getData = (url, successCallback, errorCallback) => {
       successCallback(response);
     }
     return response;
-  }).catch((err) => {
-    throw new Error(`Ошибка: ${err.message}`);
   });
 };
 
@@ -40,7 +38,5 @@ export const postData = (url, body, successCallback, errorCallback) => {
       }
       throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
     }
-  }).catch((err) => {
-    throw new Error(`Ошибка: ${err.message}`);
   });
 };

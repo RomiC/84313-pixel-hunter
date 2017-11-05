@@ -32,4 +32,6 @@ const initialGame = Object.freeze({
   stats: []
 });
 
-export {ANSWERS, ANSWER_SCORES, GAME, TIME, initialGame};
+const PROJECT_ID = 843130;
+
+export {ANSWERS, ANSWER_SCORES, GAME, TIME, initialGame, PROJECT_ID};
