@@ -4,7 +4,7 @@ import Level1ImgView from './level-type-1-image-view.js';
 import Level2ImgsView from './level-type-2-images-view.js';
 import {postData} from './../../data/game-load.js';
 import userStat from '../../templates/user-stat/user-stat.js';
-import {ANSWERS, TIME, initialGame} from './../../data/constants.js';
+import {ANSWERS, TIME, initialGame, PROJECT_ID} from './../../data/constants.js';
 import App from '../../application.js';
 import GameModel from './../../data/game-model.js';
 import header from '../../templates/header/header.js';
@@ -123,7 +123,8 @@ class GameScreen {
 
   gameOver() {
     const body = {
-      "stats": this._state.stats
+      project: PROJECT_ID,
+      stats: this._state.stats
     };
     postData(`stats/${this.model.userName}`, body, () => App.showStats(this.model.userName));
   }
